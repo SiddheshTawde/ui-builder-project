@@ -1,5 +1,5 @@
 import * as UI from "@repo/ui";
-import { ElementType } from "../../src/types";
+import { ElementType } from "@repo/drag-and-drop";
 
 export const data: ElementType[] = Object.keys(UI)
   .filter((ui) => !ui.includes("Default"))

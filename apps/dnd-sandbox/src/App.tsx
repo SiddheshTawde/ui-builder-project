@@ -2,7 +2,8 @@ import React from "react";
 import { ChevronDoubleRightIcon } from "@heroicons/react/20/solid";
 
 import { data, defaults } from "./assets/data";
-import { DragElement, DropElement, ElementType, Callback } from "../src";
+import { DragElement, DropElement, ElementType, Callback } from "@repo/drag-and-drop";
+
 
 function App() {
   const [elements, setElements] = React.useState<ElementType[]>([]);
@@ -36,7 +37,7 @@ function App() {
 
         <div className="border flex-1">
           <DropElement
-            className="h-full w-full"
+            className="dnd-h-full dnd-w-full"
             callback={handleDrop}
             elements={elements}
             setElements={setElements}

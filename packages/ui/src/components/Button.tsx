@@ -19,7 +19,6 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 export const ButtonDefault: ButtonProps = {
   variant: "contained",
-  loading: false,
   children: "Button Text",
 };
 
