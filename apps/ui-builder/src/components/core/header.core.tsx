@@ -6,8 +6,8 @@ import { HEADER_NAV } from "@root/constants/nav.constant";
 
 export default async function Header() {
   return (
-    <header className="flex items-center justify-between px-4 h-16 container border-b">
-      <div className="flex-1 flex items-center gap-x-4">
+    <header className="container flex h-16 items-center justify-between border-b px-8">
+      <div className="flex flex-1 items-center gap-x-4">
         <Link href="/" className="text-2xl font-bold">
           UI Buidler
         </Link>
@@ -15,7 +15,11 @@ export default async function Header() {
         <nav className="flex items-center">
           {HEADER_NAV.map((nav) => (
             <Button key={nav.title} variant="link" asChild>
-              <Link href={nav.href} target={nav.target} className="flex items-center gap-x-1">
+              <Link
+                href={nav.href}
+                target={nav.target}
+                className="flex items-center gap-x-1"
+              >
                 {nav.title}
                 <nav.icon />
               </Link>

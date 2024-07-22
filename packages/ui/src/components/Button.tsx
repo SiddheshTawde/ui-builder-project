@@ -17,7 +17,13 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   };
 }
 
-export function Button(props: ButtonProps) {
+export const ButtonDefault: ButtonProps = {
+  variant: "contained",
+  loading: false,
+  children: "Button Text",
+};
+
+const Button = (props: ButtonProps) => {
   return (
     <div
       className={cn("button-container ui-relative ui-h-fit ui-w-fit", [
@@ -60,9 +66,6 @@ export function Button(props: ButtonProps) {
       ) : null}
     </div>
   );
-}
-
-Button.defaultProps = {
-  children: "Button",
-  variant: "contained",
 };
+
+export default Button;

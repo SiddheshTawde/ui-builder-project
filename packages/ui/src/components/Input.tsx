@@ -37,7 +37,14 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   };
 }
 
-export function Input(props: InputProps) {
+export const InputDefault: InputProps = {
+  type: "text",
+  label: "Input Label",
+  placeholder: "Placeholder",
+  helperText: "Small description for the above input.",
+};
+
+const Input = (props: InputProps) => {
   const input_id = generateRandomId(8);
   return (
     <div
@@ -123,10 +130,6 @@ export function Input(props: InputProps) {
       ) : null}
     </div>
   );
-}
-
-Input.defaultProps = {
-  type: "email",
-  placehodler: "Placeholder",
-  label: "Label",
 };
+
+export default Input;

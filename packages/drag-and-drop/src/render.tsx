@@ -1,13 +1,13 @@
 import { Button, Input } from "@repo/ui";
 
-const componentsMap = {
+export const componentsMap = {
   Button,
   Input,
 };
 
 export type RendererProps = {
   name: string;
-  props?: any; // Adjust this type according to your needs
+  props: Record<string, any>;
 };
 
 export function Renderer({ name, props }: RendererProps) {

@@ -15,7 +15,7 @@ export function DragElement(props: DraggableProps) {
     event.dataTransfer.effectAllowed = props.effect;
     event.dataTransfer.setData(
       FORMAT,
-      JSON.stringify({ effect: props.effect, id: props.element.id || generateUUID(), title: props.element.title })
+      JSON.stringify({ effect: props.effect, id: generateUUID(), title: props.element.title })
     );
   };
 
