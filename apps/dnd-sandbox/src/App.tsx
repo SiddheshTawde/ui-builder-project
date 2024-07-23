@@ -1,9 +1,8 @@
 import React from "react";
 import { ChevronDoubleRightIcon } from "@heroicons/react/20/solid";
 
-import { data, defaults } from "./assets/data";
+import { data } from "./assets/data";
 import { DragElement, DropElement, ElementType, Callback } from "@repo/drag-and-drop";
-
 
 function App() {
   const [elements, setElements] = React.useState<ElementType[]>([]);
@@ -41,7 +40,6 @@ function App() {
             callback={handleDrop}
             elements={elements}
             setElements={setElements}
-            defaults={defaults}
           />
         </div>
       </section>

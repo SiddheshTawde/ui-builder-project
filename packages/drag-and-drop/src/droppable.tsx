@@ -3,6 +3,7 @@
 import React from "react";
 import { remove } from "lodash";
 import { motion, Reorder } from "framer-motion";
+import { ComponentsMap } from "@repo/ui";
 
 import { cn } from "./helpers";
 import { Renderer } from "./render";
@@ -14,7 +15,6 @@ export interface DroppableProps extends React.HTMLAttributes<HTMLDivElement> {
   callback: (parsed: Callback) => void;
   elements: ElementType[];
   setElements: React.Dispatch<React.SetStateAction<ElementType[]>>;
-  defaults: Record<string, any>;
 }
 
 export function DropElement(props: DroppableProps) {
@@ -33,10 +33,7 @@ export function DropElement(props: DroppableProps) {
       event.dataTransfer.getData(FORMAT),
     );
 
-    if (dragcontent.effect === "move") {
-    } else {
-      props.callback(dragcontent);
-    }
+    props.callback(dragcontent);
   };
 
   const handleRemoveElement = (id: string) => {
@@ -60,12 +57,12 @@ export function DropElement(props: DroppableProps) {
         axis="y"
         values={props.elements}
         onReorder={props.setElements}
-        className="dnd-flex-1 dnd-flex dnd-flex-col dnd-gap-2 dnd-p-2"
+        className="dnd-flex dnd-flex-1 dnd-flex-col dnd-gap-2 dnd-p-2"
       >
         {props.elements.map((element) => (
           <Reorder.Item key={element.id} value={element}>
             <div
-              className="dnd-relative dnd-group dnd-h-full dnd-w-full dnd-flex dnd-items-stretch"
+              className="dnd-group dnd-relative dnd-flex dnd-h-full dnd-w-full dnd-items-stretch"
               onClick={(event) => {
                 event.preventDefault();
                 event.stopPropagation();
@@ -75,7 +72,7 @@ export function DropElement(props: DroppableProps) {
             >
               <div
                 className={cn(
-                  "dnd-p-2 dnd-flex-1 dnd-border-2 dnd-border-transparent dnd-border-dashed dnd-transition-all hover:dnd-border-transparent/40",
+                  "dnd-flex-1 dnd-border-2 dnd-border-dashed dnd-border-transparent dnd-p-2 dnd-transition-all hover:dnd-border-transparent/40",
                   {
                     "dnd-border-indigo-400":
                       edit !== null && element.id === edit.id,
@@ -86,19 +83,16 @@ export function DropElement(props: DroppableProps) {
                     element.id === edit?.id ? "rgb(129 140 248)" : "",
                 }}
               >
-                <Renderer
-                  name={element.title}
-                  props={props.defaults[element.title]}
-                />
+                <Renderer name={element.title} />
               </div>
 
-              <div className="dnd-absolute dnd-top-2 dnd-right-4 dnd-invisible group-hover:dnd-visible dnd-flex dnd-items-start dnd-gap-x-4">
+              <div className="dnd-invisible dnd-absolute dnd-right-4 dnd-top-2 dnd-flex dnd-items-start dnd-gap-x-4 group-hover:dnd-visible">
                 <button
                   onClick={(event) => {
                     event.stopPropagation();
                     handleRemoveElement(element.id || "");
                   }}
-                  className="dnd-text-rose-500 dnd-text-xs dnd-font-semibold dnd-h-fit"
+                  className="dnd-h-fit dnd-text-xs dnd-font-semibold dnd-text-rose-500"
                 >
                   Remove
                 </button>
@@ -114,13 +108,13 @@ export function DropElement(props: DroppableProps) {
           width: edit === null ? 0 : 300,
           padding: edit === null ? 0 : 8,
         }}
-        className="dnd-overflow-hidden dnd-h-full dnd-w-0"
+        className="dnd-h-full dnd-w-0 dnd-overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="dnd-p-2 dnd-h-full dnd-border dnd-rounded">
-          <p className="dnd-text-xl dnd-font-semibold dnd-mb-4">{edit?.title}</p>
-
-          <PropsEditor props={edit ? props.defaults[edit.title] : {}} />
+        <div className="dnd-h-full dnd-rounded dnd-border dnd-p-2">
+          <p className="dnd-mb-4 dnd-text-xl dnd-font-semibold">
+            {edit?.title}
+          </p>
         </div>
       </motion.div>
     </div>

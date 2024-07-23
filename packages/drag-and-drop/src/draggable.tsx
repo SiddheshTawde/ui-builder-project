@@ -3,7 +3,7 @@
 import React from "react";
 import { FORMAT } from "./constants";
 import { Effect, ElementType } from "./types";
-import { generateUUID } from "./helpers";
+import { v4 as uuidv4 } from 'uuid';
 
 export interface DraggableProps extends React.HTMLAttributes<HTMLDivElement> {
   effect: Effect;
@@ -17,7 +17,7 @@ export function DragElement(props: DraggableProps) {
       FORMAT,
       JSON.stringify({
         effect: props.effect,
-        id: generateUUID(),
+        id: uuidv4(),
         title: props.element.title,
       }),
     );

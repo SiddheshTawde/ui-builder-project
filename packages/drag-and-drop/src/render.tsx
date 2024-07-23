@@ -1,21 +1,19 @@
-import { Button, Input } from "@repo/ui";
+import { ComponentsMap, ComponentsDefault } from "@repo/ui";
 
-export const componentsMap = {
-  Button,
-  Input,
-};
+type ComponentName = keyof typeof ComponentsMap;
 
 export type RendererProps = {
-  name: string;
-  props: Record<string, any>;
+  name: ComponentName;
 };
 
-export function Renderer({ name, props }: RendererProps) {
-  const Component = componentsMap[name as keyof typeof componentsMap];
+export function Renderer({ name }: RendererProps) {
+  const Component = ComponentsMap[name];
+  const props = ComponentsDefault[name];
 
-  if (!Component) {
+  if (!Component || !props) {
     return <div>Component not found</div>;
   }
 
+  // @ts-expect-error - Types will clash from different PropTypes
   return <Component {...props} />;
 }

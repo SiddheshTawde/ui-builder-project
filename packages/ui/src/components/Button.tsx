@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, CSSProperties } from "react";
+import React, { ButtonHTMLAttributes, CSSProperties } from "react";
 import { FiLoader } from "react-icons/fi";
 import { cn } from "../lib/utils.js";
 

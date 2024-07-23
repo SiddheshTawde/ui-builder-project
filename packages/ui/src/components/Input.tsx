@@ -5,7 +5,8 @@ import {
   SetStateAction,
 } from "react";
 import { clsx } from "clsx";
-import { cn, generateRandomId } from "../lib/utils";
+import { cn } from "../lib/utils";
+import { v4 as uuidv4 } from 'uuid';
 
 import {
   ExclamationTriangleIcon,
@@ -39,13 +40,14 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 export const InputDefault: InputProps = {
   type: "text",
+  error: "",
   label: "Input Label",
   placeholder: "Placeholder",
   helperText: "Small description for the above input.",
 };
 
 const Input = (props: InputProps) => {
-  const input_id = generateRandomId(8);
+  const input_id = uuidv4();
   return (
     <div
       className={cn("ui-group ui-flex ui-w-full ui-flex-col", [

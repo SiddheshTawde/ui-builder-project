@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react";
 
 type PropsValue = string | number | boolean;
@@ -7,9 +8,13 @@ type PropsEditorProps = {
 };
 
 export const PropsEditor = ({ props }: PropsEditorProps) => {
+  const [local, setLocal] = React.useState(props);
+
+  React.useEffect(() => setLocal(props), [props]);
+
   return (
-    <div className="dnd-bg-transparent/5 dnd-border dnd-border-transparent/20 dnd-p-2 dnd-flex dnd-flex-col dnd-gap-4">
-      {Object.keys(props).map((prop, index) => (
+    <div className="dnd-flex dnd-flex-col dnd-gap-4 dnd-border dnd-p-2 dnd-rounded">
+      {Object.keys(local).map((prop, index) => (
         <PropsField key={index} prop={prop} initial={props[prop]} />
       ))}
     </div>
@@ -28,14 +33,14 @@ const PropsField = ({
   if (typeof value === "boolean") {
     return (
       <div className="dnd-flex dnd-items-center dnd-gap-2">
-        <label className="dnd-text-xs dnd-font-medium dnd-capitalize">
+        <label className="dnd-text-xs dnd-font-semibold dnd-capitalize">
           {prop}
         </label>
         <input
           type="checkbox"
           checked={value}
           onChange={() => updateValue(!value)}
-          className="dnd-border dnd-outline-none dnd-p-2 dnd-text-sm"
+          className="dnd-border dnd-p-2 dnd-text-sm dnd-outline-none"
         />
       </div>
     );
@@ -43,11 +48,13 @@ const PropsField = ({
 
   return (
     <div>
-      <p className="dnd-text-xs dnd-font-medium dnd-capitalize">{prop}</p>
+      <p className="dnd-mb-1 dnd-text-xs dnd-font-semibold dnd-capitalize">
+        {prop}:
+      </p>
       <input
         value={value}
         onChange={(event) => updateValue(event.target.value)}
-        className="dnd-border dnd-w-full dnd-outline-none dnd-p-2 dnd-text-sm"
+        className="dnd-w-full dnd-border dnd-p-2 dnd-text-sm dnd-outline-none"
       />
     </div>
   );
