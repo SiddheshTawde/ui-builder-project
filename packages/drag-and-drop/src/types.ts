@@ -1,15 +1,9 @@
-import { ComponentsMap } from "@repo/ui";
-type ComponentName = keyof typeof ComponentsMap;
-
 export type ElementType = {
   id?: string;
-  title: ComponentName;
+  title: string;
 };
-
-export type Effect = "move" | "copy";
 
 export type Callback = {
   id: string;
-  title: ComponentName;
-  effect: Effect;
+  title: string;
 };

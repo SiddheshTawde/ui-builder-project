@@ -7,7 +7,7 @@
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "tsup && tailwindcss -i ./src/index.css -o ./dist/index.css",
+    "build": "npm run clean && tsup && tailwindcss -i ./src/index.css -o ./dist/index.css",
     "dev": "concurrently \"npm run watch:tsup\" \"npm run watch:tailwind\"",
     "watch:tsup": "tsup --watch",
     "watch:tailwind": "tailwindcss -i ./src/index.css -o ./dist/index.css --watch",

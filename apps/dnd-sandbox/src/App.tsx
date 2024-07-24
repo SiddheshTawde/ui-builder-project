@@ -1,8 +1,10 @@
 import React from "react";
+import * as UI from "@repo/ui";
 import { ChevronDoubleRightIcon } from "@heroicons/react/20/solid";
+import { DragElement, DropElement, ElementType, Callback } from "@repo/drag-and-drop";
 
 import { data } from "./assets/data";
-import { DragElement, DropElement, ElementType, Callback } from "@repo/drag-and-drop";
+import { defaults } from "./defaults.config";
 
 function App() {
   const [elements, setElements] = React.useState<ElementType[]>([]);
@@ -24,7 +26,6 @@ function App() {
           {data.map((el, i) => (
             <DragElement
               key={i}
-              effect="copy"
               element={el}
               className="border px-2 py-4 flex items-center justify-between pr-4 hover:pr-2 transition-all group"
             >
@@ -40,6 +41,8 @@ function App() {
             callback={handleDrop}
             elements={elements}
             setElements={setElements}
+            defaults={defaults}
+            uicomponents={UI}
           />
         </div>
       </section>
