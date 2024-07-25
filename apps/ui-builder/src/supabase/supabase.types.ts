@@ -9,42 +9,6 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      frames: {
-        Row: {
-          created_at: string
-          created_by: string
-          created_by_id: string
-          id: string
-          name: string
-          template: Json
-          updated_at: string
-          updated_by: string
-          updated_by_id: string
-        }
-        Insert: {
-          created_at?: string
-          created_by?: string
-          created_by_id?: string
-          id?: string
-          name?: string
-          template?: Json
-          updated_at?: string
-          updated_by?: string
-          updated_by_id?: string
-        }
-        Update: {
-          created_at?: string
-          created_by?: string
-          created_by_id?: string
-          id?: string
-          name?: string
-          template?: Json
-          updated_at?: string
-          updated_by?: string
-          updated_by_id?: string
-        }
-        Relationships: []
-      }
       pages: {
         Row: {
           created_at: string
@@ -80,6 +44,42 @@ export type Database = {
           name?: string
           publish_notes?: string | null
           published?: boolean
+          template?: Json
+          updated_at?: string
+          updated_by?: string
+          updated_by_id?: string
+        }
+        Relationships: []
+      }
+      wireframes: {
+        Row: {
+          created_at: string
+          created_by: string
+          created_by_id: string
+          id: string
+          name: string
+          template: Json
+          updated_at: string
+          updated_by: string
+          updated_by_id: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string
+          created_by_id?: string
+          id?: string
+          name?: string
+          template?: Json
+          updated_at?: string
+          updated_by?: string
+          updated_by_id?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          created_by_id?: string
+          id?: string
+          name?: string
           template?: Json
           updated_at?: string
           updated_by?: string

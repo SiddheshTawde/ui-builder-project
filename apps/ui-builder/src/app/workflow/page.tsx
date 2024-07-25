@@ -1,7 +1,7 @@
 import { supabase } from "@root/supabase";
 
 export default async function WireframePage() {
-  const { data, error } = await supabase.from("frames").select("*").limit(10);
+  const { data, error } = await supabase.from("wireframes").select("*").limit(10);
 
   if (error) {
     return "There was some error";

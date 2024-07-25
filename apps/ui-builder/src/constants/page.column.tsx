@@ -10,7 +10,7 @@ import { Tables } from "@root/supabase/supabase.types";
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 
-export const columns: ColumnDef<Tables<"frames">>[] = [
+export const columns: ColumnDef<Tables<"pages">>[] = [
   {
     accessorKey: "name",
     header: ({ header }) => (
@@ -19,7 +19,7 @@ export const columns: ColumnDef<Tables<"frames">>[] = [
     cell: ({ row }) => {
       return (
         <Button variant="link" asChild>
-          <Link href={"/frames/" + row.getValue("name")}>
+          <Link href={"/wireframe/" + row.getValue("name")}>
             {row.getValue("name")}
           </Link>
         </Button>

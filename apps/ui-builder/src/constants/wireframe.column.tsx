@@ -19,7 +19,7 @@ import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 
-export const columns: ColumnDef<Tables<"frames">>[] = [
+export const columns: ColumnDef<Tables<"wireframes">>[] = [
   {
     accessorKey: "name",
     header: ({ header }) => (
@@ -33,25 +33,6 @@ export const columns: ColumnDef<Tables<"frames">>[] = [
               {row.getValue("name")}
             </Link>
           </Button>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
-                <DotsHorizontalIcon className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem>
-                <Link href={"/frames/" + row.getValue("name") + "/edit"}>
-                  Edit
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>Clone</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Delete</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
         </div>
       );
     },
@@ -84,5 +65,30 @@ export const columns: ColumnDef<Tables<"frames">>[] = [
     ),
     cell: ({ row }) =>
       moment(row.getValue("created_at")).format("MMM DD, YYYY"),
+  },
+  {
+    accessorKey: "actions",
+    header: "",
+    cell: ({ row }) => (
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" className="h-8 w-8 p-0">
+            <span className="sr-only">Open menu</span>
+            <DotsHorizontalIcon className="h-4 w-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuItem>
+            <Link href={"/wireframe/" + row.getValue("name") + "/edit"}>Edit</Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem>Clone</DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem>Delete</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    ),
+    size: 48,
+    enableResizing: false,
   },
 ];

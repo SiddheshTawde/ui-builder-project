@@ -1,9 +1,12 @@
 import { supabase } from "@root/supabase";
-import { columns } from "@root/constants/frame.column";
+import { columns } from "@root/constants/wireframe.column";
 import { DataTable } from "@root/components/core/data-table.core";
 
 export default async function WireframePage() {
-  const { data, error } = await supabase.from("frames").select("*").limit(10);
+  const { data, error } = await supabase
+    .from("wireframes")
+    .select("*")
+    .limit(10);
 
   if (error) {
     return "There was some error";
