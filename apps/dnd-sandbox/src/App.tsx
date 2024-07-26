@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import * as UI from "@repo/ui";
 import { ChevronDoubleRightIcon } from "@heroicons/react/20/solid";
 import { DragElement, DropElement, ElementType, Callback } from "@repo/drag-and-drop";
 
 import { data } from "./assets/data";
 import { defaults } from "./defaults.config";
+import { PropsEditor } from "./props-editor";
 
 function App() {
   const [elements, setElements] = React.useState<ElementType[]>([]);
+  const [elementProps, updateElementProps] = React.useState<Record<string, any>>({});
+  const [selectedElement, handleElementClick] = useState<ElementType | null>(null);
 
   const handleDrop = (parsed: Callback) => {
     const updated = [...elements];
@@ -35,7 +38,7 @@ function App() {
           ))}
         </div>
 
-        <div className="border flex-1">
+        <div className="border flex-1" onClick={() => handleElementClick(null)}>
           <DropElement
             className="dnd-h-full dnd-w-full"
             callback={handleDrop}
@@ -43,7 +46,22 @@ function App() {
             setElements={setElements}
             defaults={defaults}
             uicomponents={UI}
+            elementProps={elementProps}
+            updateElementProps={updateElementProps}
+            selectedElement={selectedElement}
+            handleElementClick={handleElementClick}
           />
+        </div>
+
+        <div className="w-[300px] border p-2">
+          {selectedElement !== null ? (
+            <PropsEditor
+              className="h-full w-full"
+              selectedElement={selectedElement}
+              elementProps={elementProps}
+              updateElementProps={updateElementProps}
+            />
+          ) : null}
         </div>
       </section>
     </main>
