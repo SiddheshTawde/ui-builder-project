@@ -50,6 +50,7 @@ function App() {
             updateElementProps={updateElementProps}
             selectedElement={selectedElement}
             handleElementClick={handleElementClick}
+            axis="y"
           />
         </div>
 

@@ -1,5 +1,4 @@
 import React, { ButtonHTMLAttributes, CSSProperties } from "react";
-import PropTypes from 'prop-types'
 import { FiLoader } from "react-icons/fi";
 import { cn } from "../lib/utils.js";
 
@@ -42,15 +41,15 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             "button-element ui-rounded ui-px-4 ui-py-2 ui-transition-all",
             [props.classNames?.button],
             {
-              "ui-bg-primary ui-text-primary-foreground disabled:ui-bg-primary/10":
+              "ui-bg-indigo-500 ui-text-indigo-50 disabled:ui-bg-indigo-500/10":
                 variant === "contained",
             },
             {
-              "ui-border ui-border-primary ui-bg-primary-foreground ui-text-primary disabled:ui-border-primary/10 disabled:ui-text-primary/10":
+              "ui-border ui-border-indigo-500 ui-bg-indigo-50 ui-text-indigo-500 disabled:ui-border-indigo-500/10 disabled:ui-text-primary/10":
                 variant === "outlined",
             },
             {
-              "ui-text-primary hover:ui-underline disabled:ui-border-primary/10 disabled:ui-text-primary/10":
+              "ui-text-indigo-500 hover:ui-underline disabled:ui-border-indigo-500/10 disabled:ui-text-indigo-500/10":
                 variant === "link",
             },
           )}
@@ -62,7 +61,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {loading ? (
           <FiLoader
             className={cn(
-              "ui-absolute ui-bottom-0 ui-left-0 ui-right-0 ui-top-0 ui-z-10 ui-m-auto ui-h-5 ui-w-5 ui-animate-spin ui-text-primary",
+              "ui-absolute ui-bottom-0 ui-left-0 ui-right-0 ui-top-0 ui-z-10 ui-m-auto ui-h-5 ui-w-5 ui-animate-spin ui-text-indigo-500",
               [props.classNames?.loader],
             )}
             style={props.styles?.loader}

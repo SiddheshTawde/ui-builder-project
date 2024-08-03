@@ -65,7 +65,11 @@ export function DropElement({ axis = "y", ...props }: DroppableProps) {
         className="dnd-flex dnd-flex-1 dnd-flex-col dnd-gap-2 dnd-p-2"
       >
         {props.elements.map((element) => (
-          <Reorder.Item key={element.id} value={element}>
+          <Reorder.Item
+            key={element.id}
+            value={element}
+            className={cn({ "dnd-flex-1": element.title === "Main" })}
+          >
             <div
               key={element.id}
               className="dnd-group dnd-relative dnd-flex dnd-h-full dnd-w-full dnd-items-stretch"

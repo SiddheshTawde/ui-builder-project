@@ -1,9 +1,4 @@
-import {
-  CSSProperties,
-  Dispatch,
-  InputHTMLAttributes,
-  SetStateAction,
-} from "react";
+import { CSSProperties, InputHTMLAttributes } from "react";
 import { clsx } from "clsx";
 import { cn } from "../lib/utils";
 import { v4 as uuidv4 } from "uuid";
@@ -17,8 +12,6 @@ import React from "react";
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   type?: "text" | "email" | "password" | "number" | "url" | "search";
-  showPassword?: boolean;
-  togglePassword?: Dispatch<SetStateAction<boolean>>;
   loading?: boolean;
   label?: string;
   error?: string;
@@ -50,6 +43,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     },
     ref,
   ) => {
+    const [showPassword, togglePassword] = React.useState(false);
     const input_id = uuidv4();
     return (
       <div
@@ -77,8 +71,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         <div className="ui-relative ui-w-full">
           <input
             {...props}
+            ref={ref}
             id={input_id}
-            type={props.showPassword ? "text" : props.type || "text"}
+            type={showPassword ? "text" : props.type || "text"}
             className={clsx(
               "ui-w-full ui-border ui-bg-transparent ui-px-4 ui-py-2 ui-outline-none focus:ui-ring",
               [props.classNames?.input],
@@ -96,12 +91,12 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             <button
               className="ui-absolute ui-bottom-0 ui-right-4 ui-top-0 ui-z-10 ui-m-auto ui-h-fit ui-w-fit"
               onClick={() => {
-                if (props.togglePassword) {
-                  props.togglePassword(!props.showPassword);
+                if (togglePassword) {
+                  togglePassword(!showPassword);
                 }
               }}
             >
-              {props.showPassword ? (
+              {showPassword ? (
                 <EyeIcon className="ui-h-5 ui-w-5" />
               ) : (
                 <EyeSlashIcon className="ui-h-5 ui-w-5" />
