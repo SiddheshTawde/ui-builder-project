@@ -3,7 +3,6 @@
 import {
   ColumnDef,
   ColumnFiltersState,
-  VisibilityState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -19,18 +18,11 @@ import {
   TableRow,
 } from "@root/components/ui/table";
 
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@root/components/ui/dropdown-menu";
-
 import { Input } from "@root/components/ui/input";
 
 import React from "react";
 import { Button } from "../ui/button";
-import { ChevronDownIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { PlusIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 
 interface DataTableProps<TData, TValue> {

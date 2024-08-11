@@ -1,74 +1,36 @@
-import React, { useState } from "react";
-import * as UI from "@repo/ui";
-import { ChevronDoubleRightIcon } from "@heroicons/react/20/solid";
-import { DragElement, DropElement, ElementType, Callback } from "@repo/drag-and-drop";
+import React from "react";
+import { Draggable, Droppable, Provider, DnDState } from "@repo/drag-and-drop";
+import { layout } from "./assets/data";
 
-import { data } from "./assets/data";
-import { defaults } from "./defaults.config";
-import { PropsEditor } from "./props-editor";
+import "@repo/drag-and-drop/dist/index.css";
+import "./index.css";
 
-function App() {
-  const [elements, setElements] = React.useState<ElementType[]>([]);
-  const [elementProps, updateElementProps] = React.useState<Record<string, any>>({});
-  const [selectedElement, handleElementClick] = useState<ElementType | null>(null);
+const initialState: DnDState = {
+  elements: [],
+  selected: null,
+  dragging: null,
+};
 
-  const handleDrop = (parsed: Callback) => {
-    const updated = [...elements];
-
-    updated.push({ id: parsed.id, title: parsed.title });
-
-    setElements(updated);
-  };
-
-  console.log(elementProps);
+export default function App() {
+  const [DnDState, setDnDState] = React.useState(initialState);
 
   return (
-    <main className="h-full w-full flex items-center justify-start flex-col py-2 px-4 gap-12 container mx-auto">
-      <h1 className="w-full text-3xl font-bold text-transparent/80">Drag & Drop</h1>
+    <>
+      <p className="border-b bg-black px-4 py-4 text-3xl font-medium text-neutral-400">Drag and Drop Demo</p>
 
-      <section className="flex-1 w-full flex gap-4">
-        <div className="border w-[300px] flex flex-col gap-2 p-2">
-          {data.map((el, i) => (
-            <DragElement
-              key={i}
-              element={el}
-              className="border px-2 py-4 flex items-center justify-between pr-4 hover:pr-2 transition-all group"
-            >
-              <span>{el.title}</span>
-              <ChevronDoubleRightIcon className="h-6 w-6 text-transparent/40 group-hover:text-transparent/80" />
-            </DragElement>
-          ))}
-        </div>
+      <Provider state={DnDState} setState={setDnDState}>
+        <div className="container mx-auto flex flex-1 items-stretch gap-4 py-4">
+          <ul className="flex w-[300px] flex-col gap-y-2">
+            {layout.map((element, index) => (
+              <Draggable key={index} dragdata={element} className="border bg-white px-2 py-3 font-medium capitalize">
+                {element.title}
+              </Draggable>
+            ))}
+          </ul>
 
-        <div className="border flex-1" onClick={() => handleElementClick(null)}>
-          <DropElement
-            className="dnd-h-full dnd-w-full"
-            callback={handleDrop}
-            elements={elements}
-            setElements={setElements}
-            defaults={defaults}
-            uicomponents={UI}
-            elementProps={elementProps}
-            updateElementProps={updateElementProps}
-            selectedElement={selectedElement}
-            handleElementClick={handleElementClick}
-            axis="y"
-          />
+          <Droppable className="flex h-full flex-1 flex-col gap-2 rounded border p-2" />
         </div>
-
-        <div className="w-[300px] border p-2">
-          {selectedElement !== null ? (
-            <PropsEditor
-              className="h-full w-full"
-              selectedElement={selectedElement}
-              elementProps={elementProps}
-              updateElementProps={updateElementProps}
-            />
-          ) : null}
-        </div>
-      </section>
-    </main>
+      </Provider>
+    </>
   );
 }
-
-export default App;
