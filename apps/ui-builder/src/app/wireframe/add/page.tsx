@@ -41,18 +41,16 @@ import { getWireframe } from "@root/services/get-wireframe";
 import {
   AlertDialog,
   AlertDialogAction,
-  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@root/components/ui/alert-dialog";
+import { toast } from "@root/components/ui/use-toast";
 
 const formSchema = z.object({
   wireframename: z.string({ required_error: "Name cannot be empty" }).min(2),
-  template: z.string(),
 });
 
 const initialState: DnDState = {
@@ -71,9 +69,7 @@ export default function Page() {
 
   const [state, setState] = React.useState(initialState);
 
-  const [template, changeTemplate] = React.useState<string | undefined>(
-    undefined,
-  );
+  const [template, changeTemplate] = React.useState("");
   const [discard, toggleDiscard] = React.useState(false);
   const [saving, toggleSaving] = React.useState(false);
 
@@ -83,7 +79,10 @@ export default function Page() {
       .select("*")
       .then(({ error, data }) => {
         if (error !== null) {
-          console.log(error);
+          toast({
+            title: "There was some error",
+            description: "Unable get existing wireframes.",
+          });
         }
         if (data !== null) {
           updateAvailableWireframes(data);
@@ -95,7 +94,6 @@ export default function Page() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       wireframename: "",
-      template: "",
     },
   });
 
@@ -133,7 +131,8 @@ export default function Page() {
     }
   }
   function handleDiscardCancel() {
-    changeTemplate(undefined);
+    changeTemplate("");
+    toggleDiscard(false);
   }
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -152,6 +151,8 @@ export default function Page() {
     }
   }
 
+  console.log(state);
+
   return (
     <>
       <main className="container mx-auto h-[calc(100vh-64px)]">
@@ -161,35 +162,24 @@ export default function Page() {
             className="flex h-full w-full flex-col gap-4"
           >
             <div className="grid grid-cols-12 gap-4">
-              <FormField
-                control={form.control}
-                name="template"
-                render={() => (
-                  <FormItem className="col-span-2">
-                    <FormLabel>Select Template</FormLabel>
-                    <Select
-                      onValueChange={(value) => {
-                        handleTemplateOnChange(value);
-                      }}
-                      value={template}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="--" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {availableWireframes.map((wireframe) => (
-                          <SelectItem key={wireframe.id} value={wireframe.id}>
-                            {wireframe.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <FormItem className="col-span-2">
+                <FormLabel>Select Template</FormLabel>
+                <Select value={template} onValueChange={handleTemplateOnChange}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="--" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {availableWireframes.map((wireframe) => (
+                      <SelectItem key={wireframe.id} value={wireframe.id}>
+                        {wireframe.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
               <FormField
                 control={form.control}
                 name="wireframename"
@@ -265,14 +255,13 @@ export default function Page() {
           <AlertDialogHeader>
             <AlertDialogTitle>You have some unsaved changes</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete your
-              account and remove your data from our servers.
+              Discarding will remove any changes you have made to the frame.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={handleDiscardCancel}>
+            <Button variant="outline" onClick={handleDiscardCancel}>
               Cancel
-            </AlertDialogCancel>
+            </Button>
             <AlertDialogAction onClick={handleDiscardAndContinue}>
               Discard & Continue
             </AlertDialogAction>
