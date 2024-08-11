@@ -1,11 +1,11 @@
 {
-  "name": "@repo/drag-and-drop",
-  "version": "0.0.0",
-  "private": true,
+  "name": "@siddheshtawde/drag-and-drop",
+  "version": "1.0.1",
+  "private": false,
   "type": "module",
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "index.cjs",
+  "module": "index.js",
+  "types": "index.d.ts",
   "scripts": {
     "build": "npm run clean && tsup && tailwindcss -i ./src/index.css -o ./dist/index.css && npm run copy",
     "copy": "cp package.json dist/ && cp README.md dist/",
@@ -16,7 +16,6 @@
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
   "dependencies": {
-    "@repo/ui": "*",
     "clsx": "^2.1.1",
     "framer-motion": "^11.3.8",
     "lodash": "^4.17.21",
@@ -42,5 +41,20 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "description": "React.js TypeScript based Drag & Drop library for building React pages.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SiddheshTawde/ui-builder-project.git"
+  },
+  "keywords": [
+    "drag-and-drop",
+    "dnd"
+  ],
+  "author": "Siddhesh Tawde",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SiddheshTawde/ui-builder-project/issues"
+  },
+  "homepage": "https://github.com/SiddheshTawde/ui-builder-project#readme"
 }

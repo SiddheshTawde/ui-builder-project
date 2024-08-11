@@ -1,5 +1,5 @@
 import * as UI from "@repo/ui";
-import type { DnDElementType } from "@repo/drag-and-drop";
+import type { DnDElementType } from "@siddheshtawde/drag-and-drop/dist";
 
 export const data = Object.keys(UI)
   .filter((ui) => !ui.includes("Default") && !ui.includes("Map"))

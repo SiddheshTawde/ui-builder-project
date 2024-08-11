@@ -16,7 +16,7 @@
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@repo/drag-and-drop": "*",
+    "@siddheshtawde/drag-and-drop": "*",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "@repo/ui": "*",
