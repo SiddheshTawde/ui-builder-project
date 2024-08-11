@@ -20,6 +20,8 @@ function App() {
     setElements(updated);
   };
 
+  console.log(elementProps);
+
   return (
     <main className="h-full w-full flex items-center justify-start flex-col py-2 px-4 gap-12 container mx-auto">
       <h1 className="w-full text-3xl font-bold text-transparent/80">Drag & Drop</h1>
