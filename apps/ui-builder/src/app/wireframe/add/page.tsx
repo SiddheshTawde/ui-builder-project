@@ -151,8 +151,6 @@ export default function Page() {
     }
   }
 
-  console.log(state);
-
   return (
     <>
       <main className="container mx-auto h-[calc(100vh-64px)]">
