@@ -3,6 +3,7 @@ import { DnDState } from "../types";
 import { DnDContext } from "../context";
 import { useImmerReducer } from "use-immer";
 import { reducer } from "../redux/reducer";
+import { isEqual } from "lodash";
 
 type Props = {
   children?: React.ReactNode;
@@ -14,8 +15,19 @@ export const Provider = (props: Props) => {
   const [state, dispatch] = useImmerReducer(reducer, props.state);
 
   React.useEffect(() => {
-    props.setState(state);
+    if (!isEqual(props.state.elements, state.elements)) {
+      props.setState(state);
+    }
   }, [state]);
+
+  React.useEffect(() => {
+    if (!isEqual(props.state.elements, state.elements)) {
+      dispatch({
+        type: "UPDATE_ELEMENT",
+        payload: { elements: props.state.elements },
+      });
+    }
+  }, [props.state.elements]);
 
   React.useEffect(() => {
     window.addEventListener("keyup", handleDeselect);

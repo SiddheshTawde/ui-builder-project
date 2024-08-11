@@ -2,9 +2,9 @@
 
 import { z } from "zod";
 import React from "react";
-import { isEqual } from "lodash";
 import { useClerk } from "@clerk/nextjs";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
@@ -62,13 +62,18 @@ const initialState: DnDState = {
 };
 
 export default function Page() {
+  const router = useRouter();
   const { user } = useClerk();
+
   const [availableWireframes, updateAvailableWireframes] = React.useState<
     Tables<"wireframes">[]
   >([]);
 
   const [state, setState] = React.useState(initialState);
 
+  const [template, changeTemplate] = React.useState<string | undefined>(
+    undefined,
+  );
   const [discard, toggleDiscard] = React.useState(false);
   const [saving, toggleSaving] = React.useState(false);
 
@@ -94,33 +99,46 @@ export default function Page() {
     },
   });
 
-  async function handleTemplateOnChange(value: string) {
-    const response = await getWireframe(value);
+  function handleTemplateOnChange(value: string) {
+    changeTemplate(value);
+    getWireframe(value).then((response) => {
+      if (response !== null) {
+        const updated = { ...state };
 
-    console.log(response);
-    if (response !== null) {
-      const updated = { ...state };
-
-      if (
-        updated.elements.length === 0 ||
-        isEqual(response.template, updated.elements)
-      ) {
-        setState({
-          elements: response.template as never as DnDElementType[],
-          dragging: null,
-          selected: null,
-        });
-      } else {
-        // Show Alert
-        toggleDiscard(true);
+        if (updated.elements.length === 0) {
+          setState({
+            elements: response.template as never as DnDElementType[],
+            dragging: null,
+            selected: null,
+          });
+        } else {
+          // Show Alert
+          toggleDiscard(true);
+        }
       }
+    });
+  }
+
+  function handleDiscardAndContinue() {
+    if (template) {
+      getWireframe(template).then((response) => {
+        if (response !== null) {
+          setState({
+            elements: response.template as never as DnDElementType[],
+            dragging: null,
+            selected: null,
+          });
+        }
+      });
     }
+  }
+  function handleDiscardCancel() {
+    changeTemplate(undefined);
   }
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-
     toggleSaving(true);
 
     if (user) {
@@ -134,8 +152,6 @@ export default function Page() {
     }
   }
 
-  console.log(state);
-
   return (
     <>
       <main className="container mx-auto h-[calc(100vh-64px)]">
@@ -148,12 +164,14 @@ export default function Page() {
               <FormField
                 control={form.control}
                 name="template"
-                render={({ field }) => (
+                render={() => (
                   <FormItem className="col-span-2">
                     <FormLabel>Select Template</FormLabel>
                     <Select
-                      onValueChange={handleTemplateOnChange}
-                      defaultValue={field.value}
+                      onValueChange={(value) => {
+                        handleTemplateOnChange(value);
+                      }}
+                      value={template}
                     >
                       <FormControl>
                         <SelectTrigger>
@@ -191,12 +209,16 @@ export default function Page() {
               />
 
               <div className="col-span-5 flex items-end justify-end gap-4">
-                <Button variant="outline" type="button">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => router.back()}
+                >
                   Go Back
                 </Button>
                 <Button
-                  variant="default"
                   type="submit"
+                  variant="default"
                   disabled={saving || !user}
                 >
                   {saving ? (
@@ -248,8 +270,12 @@ export default function Page() {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction>Discard & Continue</AlertDialogAction>
+            <AlertDialogCancel onClick={handleDiscardCancel}>
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction onClick={handleDiscardAndContinue}>
+              Discard & Continue
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
