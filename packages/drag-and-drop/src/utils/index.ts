@@ -112,3 +112,39 @@ export function updateChildrenById(
     return element;
   });
 }
+
+export function insertElementAfter(
+  elements: DnDElementType[],
+  index: number,
+  newItem: DnDElementType,
+  parentId: string,
+): DnDElementType[] {
+  if (parentId === "dnd-root-canvas") {
+    if (index === -1) {
+      return [newItem, ...elements];
+    } else if (index >= elements.length) {
+      throw new Error("Index out of bounds");
+    } else {
+      return [
+        ...elements.slice(0, index + 1),
+        newItem,
+        ...elements.slice(index + 1),
+      ];
+    }
+  }
+
+  const newElements = elements.map((element) => {
+    if (element.id === parentId) {
+      const newChildren = insertElementAfter(
+        element.children,
+        index,
+        newItem,
+        "dnd-root-canvas", // Treat children insertion as root insertion
+      );
+      return { ...element, children: newChildren };
+    }
+    return element;
+  });
+
+  return newElements;
+}

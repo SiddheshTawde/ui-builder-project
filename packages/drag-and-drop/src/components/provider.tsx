@@ -15,7 +15,7 @@ export const Provider = (props: Props) => {
   const [state, dispatch] = useImmerReducer(reducer, props.state);
 
   React.useEffect(() => {
-    if (!isEqual(props.state.elements, state.elements)) {
+    if (!isEqual(props.state, state)) {
       props.setState(state);
     }
   }, [state]);

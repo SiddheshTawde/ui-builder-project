@@ -28,7 +28,7 @@ export default function App() {
             ))}
           </ul>
 
-          <Droppable className="flex h-full flex-1 flex-col gap-2 rounded border p-2" />
+          <Droppable className="flex h-full flex-1 flex-col rounded border px-2" />
         </div>
       </Provider>
     </>
