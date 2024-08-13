@@ -94,7 +94,6 @@ export const Droppable = ({ as: AsElement = "div", ...props }: Props) => {
       onMouseLeave={handleMouseLeave}
     >
       <EdgeDropIndicator
-        parent="dnd-root-canvas"
         index={-1}
         reorder={reorder}
         handleReorder={handleReorder}
@@ -113,7 +112,6 @@ export const Droppable = ({ as: AsElement = "div", ...props }: Props) => {
             handleMouseLeave={handleMouseLeave}
           />
           <EdgeDropIndicator
-            parent="dnd-root-canvas"
             index={index}
             reorder={reorder}
             handleReorder={handleReorder}

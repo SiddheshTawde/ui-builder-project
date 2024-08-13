@@ -70,7 +70,7 @@ const Renderer = (props: Props) => {
         onClick={selectElement}
         style={props.element.attributes?.style}
         className={cn(
-          "dnd-relative dnd-gap-2 dnd-rounded dnd-border-2 dnd-border-dashed dnd-p-2 dnd-pt-8 dnd-text-center",
+          "dnd-relative dnd-gap-2 dnd-rounded dnd-border-2 dnd-border-dashed dnd-pt-8 dnd-text-center",
           { "dnd-border-transparent/20": props.hovered === props.element.id },
           { "dnd-border-indigo-500": state.selected === props.element.id },
         )}
@@ -101,13 +101,11 @@ const Renderer = (props: Props) => {
               index={-1}
               reorder={reorder}
               handleReorder={handleReorder}
-              parent={props.element.id || ""}
               title={props.element.title}
             />
             {reorder.map((child, index) => (
-              <React.Fragment>
+              <React.Fragment key={child.id}>
                 <Renderer
-                  key={child.id}
                   element={child}
                   handleDrop={props.handleDrop}
                   handleDragOver={props.handleDragOver}
@@ -122,7 +120,6 @@ const Renderer = (props: Props) => {
                   index={index}
                   reorder={reorder}
                   handleReorder={handleReorder}
-                  parent={props.element.id || ""}
                   title={props.element.title}
                 />
               </React.Fragment>

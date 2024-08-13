@@ -117,34 +117,19 @@ export function insertElementAfter(
   elements: DnDElementType[],
   index: number,
   newItem: DnDElementType,
-  parentId: string,
 ): DnDElementType[] {
-  if (parentId === "dnd-root-canvas") {
-    if (index === -1) {
-      return [newItem, ...elements];
-    } else if (index >= elements.length) {
-      throw new Error("Index out of bounds");
-    } else {
-      return [
-        ...elements.slice(0, index + 1),
-        newItem,
-        ...elements.slice(index + 1),
-      ];
-    }
+  if (index === -1) {
+    // Insert at the start of the array
+    return [newItem, ...elements];
+  } else if (index >= 0 && index < elements.length) {
+    // Insert after the given index
+    return [
+      ...elements.slice(0, index + 1),
+      newItem,
+      ...elements.slice(index + 1),
+    ];
+  } else {
+    // If the index is out of bounds, append the element at the end
+    return [...elements, newItem];
   }
-
-  const newElements = elements.map((element) => {
-    if (element.id === parentId) {
-      const newChildren = insertElementAfter(
-        element.children,
-        index,
-        newItem,
-        "dnd-root-canvas", // Treat children insertion as root insertion
-      );
-      return { ...element, children: newChildren };
-    }
-    return element;
-  });
-
-  return newElements;
 }

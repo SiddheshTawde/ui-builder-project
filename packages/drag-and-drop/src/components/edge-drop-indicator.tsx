@@ -6,7 +6,6 @@ import { DnDElementType, Edge } from "../types";
 
 type Props = {
   index: number;
-  parent: string;
   title: string;
   reorder: DnDElementType[];
   handleReorder: React.Dispatch<React.SetStateAction<DnDElementType[]>>;
@@ -23,17 +22,11 @@ export default function EdgeDropIndicator(props: Props) {
     event.stopPropagation();
 
     if (state.dragging) {
-      const updated = insertElementAfter(
-        props.reorder,
-        index,
-        state.dragging,
-        props.parent,
-      );
+      const updated = insertElementAfter(props.reorder, index, state.dragging);
       props.handleReorder(updated);
-
       dispatch({
-        type: "UPDATE_ELEMENT",
-        payload: { elements: updated },
+        type: "ADD_ELEMENT",
+        payload: { dropped: state.dragging, target: event.currentTarget.id },
       });
     }
 
@@ -62,18 +55,18 @@ export default function EdgeDropIndicator(props: Props) {
       onDragLeave={handleDragLeave}
       onDragEnd={handleDragLeave}
       onDragExit={handleDragLeave}
-      className={cn("dnd-flex dnd-h-2 dnd-items-center", {
+      className={cn("dnd-flex dnd-h-2 dnd-items-center dnd-justify-center", {
         "dnd-h-full dnd-w-2": props.title === "Row",
       })}
     >
       <div
         className={cn(
-          "dnd-h-[1px] dnd-w-full",
+          "dnd-h-[2px] dnd-w-full dnd-rounded",
           {
             "dnd-bg-indigo-700": hovered === uuid,
           },
           {
-            "dnd-h-full dnd-w-[1px]": props.title === "Row",
+            "dnd-h-full dnd-w-[2px]": props.title === "Row",
           },
         )}
       />
