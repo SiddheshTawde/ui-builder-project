@@ -14,7 +14,7 @@ export function render(nodes: DnDElementType[]) {
           key={node.id}
           style={node.attributes.style}
           className={cn(
-            "relative rounded border p-2 hover:border-indigo-500 hover:bg-indigo-500/5",
+            "relative rounded border p-2 hover:border-indigo-500 hover:bg-indigo-500/5 gap-2",
             node.attributes.className,
           )}
         >
