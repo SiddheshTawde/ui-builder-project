@@ -1,7 +1,8 @@
 import React from "react";
 import { v4 as uuid } from "uuid";
-import { DnDElementType } from "../types";
+
 import { useDnD } from "../context";
+import { DnDElementType } from "../types";
 
 type Props = {
   dragdata: DnDElementType;
@@ -12,22 +13,17 @@ type Props = {
 };
 
 export function Draggable({ as: Element = "li", ...props }: Props) {
-  const { dispatch } = useDnD();
+  const { state, setState } = useDnD();
   const handleDragStart = (event: React.DragEvent) => {
     event.stopPropagation();
 
-    dispatch({
-      type: "DRAGGING_ELEMENT",
-      payload: { element: { id: uuid(), ...props.dragdata } },
-    });
+    setState({ ...state, dragging: { id: uuid(), ...props.dragdata } });
   };
 
   const handleDragEnd = (event: React.DragEvent) => {
     event.stopPropagation();
-    dispatch({
-      type: "DRAGGING_ELEMENT",
-      payload: { element: null },
-    });
+
+    setState({ ...state, dragging: null });
   };
 
   return (

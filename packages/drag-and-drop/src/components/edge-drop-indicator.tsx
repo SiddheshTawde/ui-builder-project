@@ -1,18 +1,19 @@
 import React from "react";
 import { v4 } from "uuid";
-import { cn, insertElementAfter } from "../utils";
+import { addElementToId, cn } from "../utils";
 import { useDnD } from "../context";
-import { DnDElementType, Edge } from "../types";
+import { DnDElementType } from "../types";
 
 type Props = {
   index: number;
   title: string;
+  target: string;
   reorder: DnDElementType[];
   handleReorder: React.Dispatch<React.SetStateAction<DnDElementType[]>>;
 };
 
-export default function EdgeDropIndicator(props: Props) {
-  const { state, dispatch } = useDnD();
+export function EdgeDropIndicator(props: Props) {
+  const { state, setState } = useDnD();
 
   const [hovered, setHovered] = React.useState("");
   const uuid = React.useMemo(() => v4(), []);
@@ -22,11 +23,15 @@ export default function EdgeDropIndicator(props: Props) {
     event.stopPropagation();
 
     if (state.dragging) {
-      const updated = insertElementAfter(props.reorder, index, state.dragging);
-      props.handleReorder(updated);
-      dispatch({
-        type: "ADD_ELEMENT",
-        payload: { dropped: state.dragging, target: event.currentTarget.id },
+      setState({
+        ...state,
+        elements: addElementToId(
+          state.elements,
+          state.dragging,
+          props.target,
+          index,
+        ),
+        dragging: null,
       });
     }
 
@@ -56,7 +61,7 @@ export default function EdgeDropIndicator(props: Props) {
       onDragEnd={handleDragLeave}
       onDragExit={handleDragLeave}
       className={cn("dnd-flex dnd-h-2 dnd-items-center dnd-justify-center", {
-        "dnd-h-full dnd-w-2": props.title === "Row",
+        "!dnd-h-full dnd-w-2": props.title === "Row",
       })}
     >
       <div
@@ -66,7 +71,7 @@ export default function EdgeDropIndicator(props: Props) {
             "dnd-bg-indigo-700": hovered === uuid,
           },
           {
-            "dnd-h-full dnd-w-[2px]": props.title === "Row",
+            "!dnd-h-full !dnd-w-[2px]": props.title === "Row",
           },
         )}
       />

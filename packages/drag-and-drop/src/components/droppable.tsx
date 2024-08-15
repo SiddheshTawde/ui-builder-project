@@ -2,10 +2,11 @@ import React from "react";
 import { isEqual } from "lodash";
 import { Reorder } from "framer-motion";
 
-import { DnDElementType, Edge } from "../types";
-import Renderer from "./renderer";
 import { useDnD } from "../context";
-import EdgeDropIndicator from "./edge-drop-indicator";
+import { Renderer } from "./renderer";
+import { addElementToId } from "../utils";
+import { DnDElementType, DnDState } from "../types";
+import { EdgeDropIndicator } from "./edge-drop-indicator";
 
 type Props = {
   className?: string;
@@ -13,23 +14,36 @@ type Props = {
   styles?: React.CSSProperties;
 };
 
+const ROOT_ID = "dnd-root-canvas";
+
 export const Droppable = ({ as: AsElement = "div", ...props }: Props) => {
-  const { state, dispatch } = useDnD();
+  const { state, setState } = useDnD();
 
   const [hovered, setHovered] = React.useState("");
-  const [reorder, handleReorder] = React.useState(state.elements);
+  const [reorder, handleReorder] = React.useState<DnDElementType[]>([]);
 
   React.useEffect(() => {
-    if (!isEqual(state.elements, reorder)) {
+    window.addEventListener("keyup", handleDeselect);
+
+    return () => window.removeEventListener("keyup", handleDeselect);
+  }, [state.selected]);
+
+  const handleDeselect = (e: KeyboardEvent) => {
+    if (e.key === "Escape") {
+      setState({ ...state, selected: null });
+    }
+  };
+
+  React.useEffect(() => {
+    if (!isEqual(reorder, state.elements)) {
       handleReorder(state.elements);
     }
   }, [state.elements]);
 
   React.useEffect(() => {
-    dispatch({
-      type: "UPDATE_ELEMENT",
-      payload: { elements: reorder },
-    });
+    if (!isEqual(reorder, state.elements)) {
+      setState({ ...state, elements: reorder });
+    }
   }, [reorder]);
 
   const handleDrop = (event: React.DragEvent) => {
@@ -38,15 +52,12 @@ export const Droppable = ({ as: AsElement = "div", ...props }: Props) => {
     setHovered("");
 
     if (state.dragging) {
-      dispatch({
-        type: "ADD_ELEMENT",
-        payload: { dropped: state.dragging, target: event.currentTarget.id },
-      });
-      handleReorder([...reorder, state.dragging]);
+      const target = event.currentTarget.id;
 
-      dispatch({
-        type: "DRAGGING_ELEMENT",
-        payload: { element: null },
+      setState({
+        ...state,
+        elements: addElementToId(state.elements, state.dragging, target, -2),
+        dragging: null,
       });
     }
   };
@@ -54,7 +65,6 @@ export const Droppable = ({ as: AsElement = "div", ...props }: Props) => {
     event.preventDefault();
     event.stopPropagation();
   };
-
   const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent) => {
     event.preventDefault();
     event.stopPropagation();
@@ -81,7 +91,7 @@ export const Droppable = ({ as: AsElement = "div", ...props }: Props) => {
 
   return (
     <Reorder.Group
-      id="dnd-root-canvas"
+      id={ROOT_ID}
       values={reorder}
       onReorder={handleReorder}
       style={props.styles}
@@ -95,9 +105,10 @@ export const Droppable = ({ as: AsElement = "div", ...props }: Props) => {
     >
       <EdgeDropIndicator
         index={-1}
+        title="body"
+        target={ROOT_ID}
         reorder={reorder}
         handleReorder={handleReorder}
-        title="body"
       />
       {reorder.map((element, index) => (
         <React.Fragment key={element.id}>
@@ -112,10 +123,11 @@ export const Droppable = ({ as: AsElement = "div", ...props }: Props) => {
             handleMouseLeave={handleMouseLeave}
           />
           <EdgeDropIndicator
+            title="body"
             index={index}
+            target={ROOT_ID}
             reorder={reorder}
             handleReorder={handleReorder}
-            title="body"
           />
         </React.Fragment>
       ))}

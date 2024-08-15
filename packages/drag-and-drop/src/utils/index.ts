@@ -1,28 +1,73 @@
 import { remove } from "lodash";
 import { twMerge } from "tailwind-merge";
 import { type ClassValue, clsx } from "clsx";
-import { DnDElementType, Edge } from "../types";
+import { DnDElementType } from "../types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function findElementById(
-  array: DnDElementType[],
-  target: string,
-): DnDElementType | undefined {
-  var o;
-  array.some(function iter(a) {
-    if (a.id === target) {
-      o = a;
-      return true;
+export function addElementToId(
+  elements: DnDElementType[],
+  element: DnDElementType,
+  id: string,
+  index: number,
+) {
+  // Helper function to recursively search for the element with the given id and add the new element to its children at the correct position
+  const addToChildren = (elements: DnDElementType[]): DnDElementType[] => {
+    return elements.map((el) => {
+      if (el.id === id) {
+        let updatedChildren;
+
+        if (index === -2) {
+          // Add element to the end of the children array
+          updatedChildren = [...el.children, element];
+        } else if (index === -1) {
+          // Add element to the beginning of the children array
+          updatedChildren = [element, ...el.children];
+        } else {
+          // Add element after the given index
+          updatedChildren = [
+            ...el.children.slice(0, index + 1),
+            element,
+            ...el.children.slice(index + 1),
+          ];
+        }
+
+        return {
+          ...el,
+          children: updatedChildren,
+        };
+      }
+
+      // If not found, continue searching in the children
+      return {
+        ...el,
+        children: addToChildren(el.children),
+      };
+    });
+  };
+
+  // If id is "dnd-root-canvas", add the element to the root array
+  if (id === "dnd-root-canvas") {
+    if (index === -2) {
+      return [...elements, element];
+    } else if (index === -1) {
+      return [element, ...elements];
+    } else {
+      return [
+        ...elements.slice(0, index + 1),
+        element,
+        ...elements.slice(index + 1),
+      ];
     }
-    return Array.isArray(a.children) && a.children.some(iter);
-  });
-  return o;
+  }
+
+  // Otherwise, try to add the element to the specified id's children
+  return addToChildren(elements);
 }
 
-export function removeElementById(array: DnDElementType[], id: string) {
+export function removeElementById(elements: DnDElementType[], id: string) {
   // Helper function to recursively traverse and remove object
 
   function traverseAndRemove(arr: DnDElementType[]) {
@@ -38,98 +83,34 @@ export function removeElementById(array: DnDElementType[], id: string) {
   }
 
   // Start the recursive traversal
-  traverseAndRemove(array);
+  traverseAndRemove(elements);
 
-  return array;
-}
-
-export const insertNode = (
-  nodes: DnDElementType[],
-  targetId: string,
-  newNode: DnDElementType,
-  position: Edge,
-): DnDElementType[] => {
-  return nodes.flatMap((node) => {
-    if (node.id === targetId) {
-      return position === "top" || position === "left"
-        ? [newNode, node]
-        : [node, newNode];
-    } else if (node.children.length > 0) {
-      return [
-        {
-          ...node,
-          children: insertNode(node.children, targetId, newNode, position),
-        },
-      ];
-    } else {
-      return [node];
-    }
-  });
-};
-
-export function detectEdge(
-  event: React.DragEvent,
-  target: EventTarget & Element,
-): Edge {
-  const rect = target.getBoundingClientRect();
-  const mouseX = event.clientX - rect.left; // X position within the element
-  const mouseY = event.clientY - rect.top; // Y position within the element
-
-  const threshold = 24; // The threshold in pixels for detecting the edge
-
-  let detectedEdge: Edge = null;
-
-  if (mouseY < threshold) {
-    detectedEdge = "top";
-  } else if (mouseY > rect.height - threshold) {
-    detectedEdge = "bottom";
-  } else if (mouseX < threshold) {
-    detectedEdge = "left";
-  } else if (mouseX > rect.width - threshold) {
-    detectedEdge = "right";
-  }
-
-  return detectedEdge;
+  return elements;
 }
 
 export function updateChildrenById(
   elements: DnDElementType[],
+  children: DnDElementType[],
   id: string,
-  newChildren: DnDElementType[],
-): DnDElementType[] {
-  return elements.map((element) => {
-    if (element.id === id) {
-      return {
-        ...element,
-        children: newChildren,
-      };
-    } else if (element.children.length > 0) {
-      return {
-        ...element,
-        children: updateChildrenById(element.children, id, newChildren),
-      };
-    }
-    return element;
-  });
-}
+) {
+  // Helper function to recursively search for the element with the given id and update its children
+  const updateChildren = (elements: DnDElementType[]): DnDElementType[] => {
+    return elements.map((el) => {
+      if (el.id === id) {
+        return {
+          ...el,
+          children: children, // Update the children of the matched element
+        };
+      }
 
-export function insertElementAfter(
-  elements: DnDElementType[],
-  index: number,
-  newItem: DnDElementType,
-): DnDElementType[] {
-  if (index === -1) {
-    // Insert at the start of the array
-    return [newItem, ...elements];
-  } else if (index >= 0 && index < elements.length) {
-    // Insert after the given index
-    return [
-      ...elements.slice(0, index + 1),
-      newItem,
-      ...elements.slice(index + 1),
-    ];
-  } else {
-    // If the index is out of bounds, append the element at the end
-    return [...elements, newItem];
-  }
+      // If not found, continue searching in the children
+      return {
+        ...el,
+        children: updateChildren(el.children),
+      };
+    });
+  };
+
+  // Start the recursive search and update
+  return updateChildren(elements);
 }

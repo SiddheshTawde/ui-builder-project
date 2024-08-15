@@ -1,9 +1,9 @@
-import * as UI from "@repo/ui";
+// import * as UI from "@repo/ui";
 import type { DnDElementType } from "@siddheshtawde/drag-and-drop/dist";
 
-export const data = Object.keys(UI)
-  .filter((ui) => !ui.includes("Default") && !ui.includes("Map"))
-  .map((ui) => ({ title: ui }));
+// export const data = Object.keys(UI)
+//   .filter((ui) => !ui.includes("Default") && !ui.includes("Map"))
+//   .map((ui) => ({ title: ui }));
 
 export const layout: DnDElementType[] = [
   {

@@ -1,6 +1,8 @@
 {
   "name": "@siddheshtawde/drag-and-drop",
-  "version": "1.0.1",
+  "description": "React.js TypeScript based Drag & Drop library for building React pages.",
+  "version": "1.0.2",
+  "author": "Siddhesh Tawde",
   "private": false,
   "type": "module",
   "main": "index.cjs",
@@ -8,7 +10,7 @@
   "types": "index.d.ts",
   "scripts": {
     "build": "npm run clean && tsup && tailwindcss -i ./src/index.css -o ./dist/index.css && npm run copy",
-    "copy": "cp package.json dist/ && cp README.md dist/",
+    "copy": "cp package.json dist/ && cp README.md dist/ && cp LICENSE dist/",
     "dev": "concurrently \"npm run watch:tsup\" \"npm run watch:tailwind\"",
     "watch:tsup": "tsup --watch",
     "watch:tailwind": "tailwindcss -i ./src/index.css -o ./dist/index.css --watch",
@@ -20,7 +22,6 @@
     "framer-motion": "^11.3.8",
     "lodash": "^4.17.21",
     "tailwind-merge": "^2.4.0",
-    "use-immer": "^0.10.0",
     "uuid": "^10.0.0"
   },
   "devDependencies": {
@@ -42,7 +43,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "description": "React.js TypeScript based Drag & Drop library for building React pages.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SiddheshTawde/ui-builder-project.git"
@@ -51,7 +51,6 @@
     "drag-and-drop",
     "dnd"
   ],
-  "author": "Siddhesh Tawde",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/SiddheshTawde/ui-builder-project/issues"

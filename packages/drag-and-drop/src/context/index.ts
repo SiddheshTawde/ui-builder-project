@@ -1,9 +1,9 @@
 import React from "react";
-import { DnDActions, DnDState } from "../types";
+import { DnDState } from "../types";
 
 interface DnDContextProps {
   state: DnDState;
-  dispatch: React.Dispatch<DnDActions>;
+  setState: React.Dispatch<DnDState>;
 }
 
 export const DnDContext = React.createContext<DnDContextProps | null>(null);

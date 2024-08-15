@@ -1,11 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-.highlight-before {
-  border-top: 2px dashed #000; /* Example: Highlight the area before this element */
-}
-
-.highlight-after {
-  border-bottom: 2px dashed #000; /* Example: Highlight the area after this element */
-}
