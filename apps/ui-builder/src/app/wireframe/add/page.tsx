@@ -235,7 +235,7 @@ export default function Page() {
                   </ul>
                 </Card>
                 <Card className="col-span-7 flex rounded shadow-none">
-                  <Droppable className="flex h-full flex-1 flex-col gap-2 p-2" />
+                  <Droppable className="flex h-full flex-1 flex-col px-2" />
                 </Card>
                 <Card className="col-span-3 p-4 shadow-none">
                   <p className="text-lg font-bold">Edit Attributes:</p>
