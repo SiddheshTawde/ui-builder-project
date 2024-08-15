@@ -1,4 +1,4 @@
-# Drag and Drop Library
+# Drag and Drop | UI Builder
 
 A lightweight and flexible drag-and-drop library built with React, TypeScript, and Framer Motion.<br />
 This library allows developers to create complex HTML interfaces with ease, supporting nested elements, customizable components, and state management.
