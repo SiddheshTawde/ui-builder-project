@@ -174,7 +174,7 @@ export const layout: DnDElementType[] = [
 
 ## License
 
-This project is licensed under the [MIT License](https://github.com/SiddheshTawde/ui-builder-project/blob/main/packages/drag-and-drop/LICENSE).
+This project is licensed under the [MIT License](https://github.com/SiddheshTawde/ui-builder-project/blob/main/packages/drag-and-drop/LICENSE.md).
 
 ## Author
 
