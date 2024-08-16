@@ -1,7 +1,7 @@
 import { Card } from "@root/components/ui/card";
 import { render } from "@root/lib/utils";
 import { supabase } from "@root/supabase";
-import { DnDElementType } from "@siddheshtawde/drag-and-drop/dist";
+import { DnDElementType } from "@siddheshtawde/drag-and-drop";
 
 export default async function Page({
   params,

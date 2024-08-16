@@ -1,4 +1,4 @@
-import { DnDElementType } from "@siddheshtawde/drag-and-drop/dist";
+import { DnDElementType } from "@siddheshtawde/drag-and-drop";
 
 export const layoutElements: DnDElementType[] = [
   {

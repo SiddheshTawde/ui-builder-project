@@ -13,7 +13,7 @@ import {
   Droppable,
   DnDState,
   DnDElementType,
-} from "@siddheshtawde/drag-and-drop/dist";
+} from "@siddheshtawde/drag-and-drop";
 import { Button } from "@root/components/ui/button";
 import { Card } from "@root/components/ui/card";
 import {
