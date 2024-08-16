@@ -14,11 +14,11 @@ export function render(nodes: DnDElementType[]) {
           key={node.id}
           style={node.attributes.style}
           className={cn(
-            "relative rounded border p-2 hover:border-indigo-500 hover:bg-indigo-500/5 gap-2",
+            "relative gap-2 rounded border p-2 hover:border-indigo-500 hover:bg-indigo-500/5",
             node.attributes.className,
           )}
         >
-          <p className="text-transparent/40">{node.title}</p>
+          <p className="text-sm font-bold text-transparent/40">{node.title}</p>
 
           {node.children.length === 0 ? null : render(node.children)}
         </node.tag>
