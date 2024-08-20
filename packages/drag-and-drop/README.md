@@ -1,5 +1,7 @@
 # Drag and Drop | UI Builder
 
+[![npm version](https://img.shields.io/npm/v/@siddheshtawde/drag-and-drop?style=for-the-badge)](https://www.npmjs.com/package/@siddheshtawde/drag-and-drop) [![npm Downloads](https://img.shields.io/npm/dt/@siddheshtawde/drag-and-drop?style=for-the-badge)](https://www.npmjs.com/package/@siddheshtawde/drag-and-drop)
+
 A lightweight and flexible drag-and-drop library built with React, TypeScript, and Framer Motion.<br />
 This library allows developers to create complex HTML interfaces with ease, supporting nested elements, customizable components, and state management.
 
