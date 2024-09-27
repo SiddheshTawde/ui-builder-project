@@ -45,7 +45,7 @@ export default async function Page({
 
 const List = (node: DnDElementType) => {
   return (
-    <div>
+    <div key={node.id}>
       <p>{`<${node.tag}>`}</p>
 
       <div className="flex flex-col gap-2 pl-4">
