@@ -78,13 +78,12 @@ export default function Page() {
       .from("wireframes")
       .select("*")
       .then(({ error, data }) => {
-        if (error !== null) {
+        if (error) {
           toast({
             title: "There was some error",
-            description: "Unable get existing wireframes.",
+            description: "Unable to get existing wireframes.",
           });
-        }
-        if (data !== null) {
+        } else if (data) {
           updateAvailableWireframes(data);
         }
       });
@@ -100,10 +99,8 @@ export default function Page() {
   function handleTemplateOnChange(value: string) {
     changeTemplate(value);
     getWireframe(value).then((response) => {
-      if (response !== null) {
-        const updated = { ...state };
-
-        if (updated.elements.length === 0) {
+      if (response) {
+        if (state.elements.length === 0) {
           setState({
             elements: response.template as never as DnDElementType[],
             dragging: null,
@@ -136,20 +133,31 @@ export default function Page() {
   }
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
     toggleSaving(true);
 
     if (user) {
-      await saveWireframe(
-        user,
-        values.wireframename,
-        state.elements as never as Json,
-      );
-
-      toggleSaving(false);
+      try {
+        await saveWireframe(
+          user,
+          values.wireframename,
+          state.elements as never as Json,
+        );
+        toast({
+          title: "Success",
+          description: "Wireframe saved successfully.",
+        });
+      } catch (error) {
+        toast({
+          title: "Error",
+          description: "Failed to save wireframe.",
+        });
+      } finally {
+        toggleSaving(false);
+      }
     }
   }
+
+  console.log({ availableWireframes });
 
   return (
     <>
