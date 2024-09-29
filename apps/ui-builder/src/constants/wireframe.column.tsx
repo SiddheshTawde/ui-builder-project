@@ -15,6 +15,7 @@ import {
   DropdownMenuTrigger,
 } from "@root/components/ui/dropdown-menu";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
+import { deleteWireframe } from "@root/services/delete-wireframe";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -80,11 +81,18 @@ export const columns: ColumnDef<Tables<"wireframes">>[] = [
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuItem>
-            <Link href={"/wireframe/" + row.getValue("name") + "/edit"}>Edit</Link>
+            <Link href={"/wireframe/" + row.getValue("name") + "/edit"}>
+              Edit
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>Clone</DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Delete</DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => deleteWireframe(row.original.id)}
+            className="text-red-500 !hover:text-red-600"
+          >
+            Delete
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     ),
