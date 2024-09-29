@@ -21,6 +21,7 @@ export async function deleteWireframe(id: string) {
         title: "Wireframe deleted",
         description: "Wireframe deleted successfully.",
       });
+      window.location.reload();
       return null;
     } else {
       return data;
