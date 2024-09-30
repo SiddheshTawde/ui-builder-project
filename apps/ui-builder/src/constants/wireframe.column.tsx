@@ -16,6 +16,17 @@ import {
 } from "@root/components/ui/dropdown-menu";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { deleteWireframe } from "@root/services/delete-wireframe";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@root/components/ui/alert-dialog";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -87,11 +98,29 @@ export const columns: ColumnDef<Tables<"wireframes">>[] = [
           </DropdownMenuItem>
           <DropdownMenuItem>Clone</DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem
-            onClick={() => deleteWireframe(row.original.id)}
-            className="text-red-500 !hover:text-red-600"
-          >
-            Delete
+          <DropdownMenuItem onClick={(e) => e.preventDefault()}>
+            <AlertDialog>
+              <AlertDialogTrigger className="!hover:text-red-600 text-red-500">
+                Delete
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Delete Wireframe?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Deleting this wireframe will not affect any pages that are
+                    using it.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={() => deleteWireframe(row.original.id)}
+                  >
+                    Delete
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
