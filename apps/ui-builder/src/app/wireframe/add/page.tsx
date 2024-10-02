@@ -48,9 +48,21 @@ import {
   AlertDialogTitle,
 } from "@root/components/ui/alert-dialog";
 import { toast } from "@root/components/ui/use-toast";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@root/components/ui/dialog";
+import Link from "next/link";
 
 const formSchema = z.object({
-  wireframename: z.string({ required_error: "Name cannot be empty" }).min(2),
+  wireframename: z
+    .string({ required_error: "Name cannot be empty" })
+    .min(2, { message: "Name must contain atleast 2 characters" }),
 });
 
 const initialState: DnDState = {
@@ -157,78 +169,45 @@ export default function Page() {
     }
   }
 
-  console.log({ availableWireframes });
-
   return (
     <>
       <main className="container mx-auto h-[calc(100vh-64px)]">
         <Form {...form}>
           <form
+            id="add-wireframe-form"
             onSubmit={form.handleSubmit(onSubmit)}
             className="flex h-full w-full flex-col gap-4"
           >
-            <div className="grid grid-cols-12 gap-4">
-              <FormItem className="col-span-2">
-                <FormLabel>Select Template</FormLabel>
-                <Select value={template} onValueChange={handleTemplateOnChange}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="--" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {availableWireframes.map((wireframe) => (
-                      <SelectItem key={wireframe.id} value={wireframe.id}>
-                        {wireframe.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-              <FormField
-                control={form.control}
-                name="wireframename"
-                render={({ field }) => (
-                  <FormItem className="col-span-5">
-                    <FormLabel>Wireframe Name</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Untitled Wireframe"
-                        className="lowercase"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <div className="col-span-5 flex items-end justify-end gap-4">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => router.back()}
-                >
-                  Go Back
-                </Button>
-                <Button
-                  type="submit"
-                  variant="default"
-                  disabled={saving || !user}
-                >
-                  {saving ? (
-                    <ArrowPathIcon className="mr-2 h-4 w-4 animate-spin" />
-                  ) : null}
-                  Add Wireframe
-                </Button>
-              </div>
-            </div>
-
             <Provider state={state} setState={setState}>
               <div className="mb-4 grid w-full flex-1 grid-cols-12 gap-4">
                 <Card className="col-span-2 border-none shadow-none">
-                  <p className="text-lg font-bold">Available Elements:</p>
+                  <FormItem className="col-span-2 mb-4">
+                    <FormLabel className="text-lg font-bold">
+                      Select Template:
+                    </FormLabel>
+                    <Select
+                      value={template}
+                      onValueChange={handleTemplateOnChange}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="--" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {availableWireframes.map((wireframe) => (
+                          <SelectItem key={wireframe.id} value={wireframe.id}>
+                            {wireframe.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+
+                  <FormLabel className="text-lg font-bold">
+                    Available Elements:
+                  </FormLabel>
 
                   <ul className="flex flex-col gap-2">
                     {layoutElements.map((element, index) => (
@@ -252,6 +231,69 @@ export default function Page() {
                 </Card>
               </div>
             </Provider>
+
+            <div className="col-span-5 flex items-end justify-end gap-4">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => router.back()}
+              >
+                Go Back
+              </Button>
+
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button type="button" variant="default">
+                    Add Wireframe
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Add New Wireframe?</DialogTitle>
+                    <DialogDescription>
+                      You will be able to add elements to your wireframe in{" "}
+                      <Link
+                        href="/page"
+                        className="text-blue-700 hover:underline"
+                      >
+                        Pages
+                      </Link>{" "}
+                      section.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <FormField
+                    control={form.control}
+                    name="wireframename"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Wireframe Name</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Untitled Wireframe"
+                            className="lowercase"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <DialogFooter>
+                    <Button
+                      type="submit"
+                      variant="default"
+                      disabled={saving || !user}
+                      form="add-wireframe-form"
+                    >
+                      {saving ? (
+                        <ArrowPathIcon className="h-4 w-4 animate-spin" />
+                      ) : null}
+                      Add Wireframe
+                    </Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+            </div>
           </form>
         </Form>
       </main>
