@@ -23,6 +23,8 @@ export const HEADER_NAV = [
     title: "Storybook",
     target: "_blank",
     href: "https://ui-builder-docs.vercel.app/",
-    icon: () => <ArrowTopRightOnSquareIcon className="h-4 w-4" />,
+    icon: () => (
+      <ArrowTopRightOnSquareIcon height={16} width={16} className="h-4 w-4" />
+    ),
   },
 ];

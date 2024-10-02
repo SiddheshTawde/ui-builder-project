@@ -70,7 +70,7 @@ export function DataTable<TData, TValue>({
           asChild
         >
           <Link href={add.href}>
-            <PlusIcon className="h-4 w-4" />
+            <PlusIcon height={16} width={16} className="h-4 w-4" />
             <span>{add.title}</span>
           </Link>
         </Button>
