@@ -19,6 +19,7 @@ import { Card } from "@root/components/ui/card";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -62,7 +63,10 @@ import Link from "next/link";
 const formSchema = z.object({
   wireframename: z
     .string({ required_error: "Name cannot be empty" })
-    .min(2, { message: "Name must contain atleast 2 characters" }),
+    .min(2, { message: "Name must contain atleast 2 characters" })
+    .regex(/^[a-zA-Z-]*$/, {
+      message: "Only - are allowed",
+    }),
 });
 
 const initialState: DnDState = {
@@ -274,7 +278,11 @@ export default function Page() {
                             {...field}
                           />
                         </FormControl>
-                        <FormMessage />
+                        <FormDescription>
+                          Note: Wireframe name cannot have special characters except dash (-).
+                          <br />
+                          Example: Valid Name: <code>default-wireframe</code>
+                        </FormDescription>
                       </FormItem>
                     )}
                   />
