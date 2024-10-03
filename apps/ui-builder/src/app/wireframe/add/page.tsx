@@ -247,7 +247,11 @@ export default function Page() {
 
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button type="button" variant="default">
+                  <Button
+                    type="button"
+                    variant="default"
+                    disabled={state.elements.length === 0}
+                  >
                     Add Wireframe
                   </Button>
                 </DialogTrigger>
@@ -278,8 +282,10 @@ export default function Page() {
                             {...field}
                           />
                         </FormControl>
+                        <FormMessage />
                         <FormDescription>
-                          Note: Wireframe name cannot have special characters except dash (-).
+                          Note: Wireframe name cannot have special characters
+                          except dash (-).
                           <br />
                           Example: Valid Name: <code>default-wireframe</code>
                         </FormDescription>
