@@ -2,7 +2,6 @@ import { supabase } from "@root/supabase";
 import { toast } from "@root/components/ui/use-toast";
 
 export async function deleteWireframe(id: string) {
-  console.log(id);
   const { data, error } = await supabase
     .from("wireframes")
     .delete()
@@ -21,7 +20,6 @@ export async function deleteWireframe(id: string) {
         title: "Wireframe deleted",
         description: "Wireframe deleted successfully.",
       });
-      window.location.reload();
       return null;
     } else {
       return data;

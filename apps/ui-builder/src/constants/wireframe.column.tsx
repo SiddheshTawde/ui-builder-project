@@ -31,6 +31,11 @@ import {
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 
+const handleDelete = (id: string) => {
+  deleteWireframe(id);
+  window.location.reload();
+};
+
 export const columns: ColumnDef<Tables<"wireframes">>[] = [
   {
     accessorKey: "name",
@@ -114,7 +119,7 @@ export const columns: ColumnDef<Tables<"wireframes">>[] = [
                 <AlertDialogFooter>
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
                   <AlertDialogAction
-                    onClick={() => deleteWireframe(row.original.id)}
+                    onClick={() => handleDelete(row.original.id)}
                   >
                     Delete
                   </AlertDialogAction>
