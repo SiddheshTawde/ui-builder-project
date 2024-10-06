@@ -1,21 +1,32 @@
+"use client";
+
+import React from "react";
 import { Card } from "@root/components/ui/card";
-import { render } from "@root/lib/utils";
+import { cn, render } from "@root/lib/utils";
 import { supabase } from "@root/supabase";
 import { DnDElementType } from "@siddheshtawde/drag-and-drop";
 
-export default async function Page({
-  params,
-}: {
-  params: { wireframe: string };
-}) {
-  const { data, error } = await supabase
-    .from("wireframes")
-    .select("*")
-    .eq("name", params.wireframe)
-    .single();
+export default function Page({ params }: { params: { wireframe: string } }) {
+  const [data, setData] = React.useState<any>(null);
+  const [selected, setSelected] = React.useState<string | null>(null);
 
-  if (error) {
-    return "There was some error";
+  React.useEffect(() => {
+    supabase
+      .from("wireframes")
+      .select("*")
+      .eq("name", params.wireframe)
+      .single()
+      .then(({ data, error }) => {
+        if (error) {
+          return "There was some error";
+        }
+
+        setData(data);
+      });
+  }, [params.wireframe]);
+
+  if (!data) {
+    return <div>Loading...</div>;
   }
 
   return (
@@ -30,26 +41,40 @@ export default async function Page({
             <p>{"<body>"}</p>
             <div className="flex flex-col gap-2 pl-4">
               {(data.template as never as DnDElementType[]).map((node) =>
-                List(node),
+                List(node, selected, setSelected),
               )}
             </div>
           </div>
         </Card>
         <Card className="col-span-9 flex h-full flex-col gap-2 border-none shadow-none">
-          {render(data.template as never as DnDElementType[])}
+          {render(data.template as never as DnDElementType[], selected, setSelected)}
         </Card>
       </div>
     </main>
   );
 }
 
-const List = (node: DnDElementType) => {
+const List = (
+  node: DnDElementType,
+  selected: string | null,
+  setSelected: React.Dispatch<React.SetStateAction<string | null>>,
+) => {
   return (
-    <div key={node.id}>
-      <p>{`<${node.tag}>`}</p>
+    <div
+      key={node.id}
+      onMouseLeave={() => setSelected(null)}
+      onMouseEnter={() => setSelected(node?.id || null)}
+    >
+      <p
+        className={cn("cursor-pointer", {
+          "text-blue-500": selected === node.id,
+        })}
+      >
+        {`<${node.tag}>`}
+      </p>
 
       <div className="flex flex-col gap-2 pl-4">
-        {node.children.map((child) => List(child))}
+        {node.children.map((child) => List(child, selected, setSelected))}
       </div>
     </div>
   );
