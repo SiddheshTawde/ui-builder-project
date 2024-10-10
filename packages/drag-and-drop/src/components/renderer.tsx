@@ -27,17 +27,6 @@ export const Renderer = (props: Props) => {
     }
   }, [props.element.children]);
 
-  React.useEffect(() => {
-    if (!isEqual(reorder, props.element.children)) {
-      const updated = updateChildrenById(
-        state.elements,
-        reorder,
-        props.element.id || "",
-      );
-      setState({ ...state, elements: updated });
-    }
-  }, [reorder]);
-
   const selectElement = (event: React.MouseEvent) => {
     event.preventDefault();
     event.stopPropagation();
