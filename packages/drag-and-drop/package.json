@@ -10,7 +10,7 @@
   "types": "index.d.ts",
   "scripts": {
     "build": "npm run clean && tsup && tailwindcss -i ./src/index.css -o ./dist/index.css && npm run copy",
-    "copy": "cp package.json dist/ && cp README.md dist/ && cp LICENSE dist/",
+    "copy": "cp package.json dist/ && cp README.md dist/ && cp LICENSE.md dist/",
     "dev": "concurrently \"npm run watch:tsup\" \"npm run watch:tailwind\"",
     "watch:tsup": "tsup --watch",
     "watch:tailwind": "tailwindcss -i ./src/index.css -o ./dist/index.css --watch",
