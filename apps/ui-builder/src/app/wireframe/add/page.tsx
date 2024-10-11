@@ -183,7 +183,7 @@ export default function Page() {
             className="flex h-full w-full flex-col gap-4"
           >
             <Provider state={state} setState={setState}>
-              <div className="mb-4 grid w-full flex-1 grid-cols-12 gap-4">
+              <div className="mt-4 grid w-full flex-1 grid-cols-12 gap-4">
                 <Card className="col-span-2 border-none shadow-none">
                   <FormItem className="col-span-2 mb-4">
                     <FormLabel className="text-lg font-bold">
@@ -225,13 +225,8 @@ export default function Page() {
                     ))}
                   </ul>
                 </Card>
-                <Card className="col-span-7 flex rounded shadow-none">
+                <Card className="col-span-10 flex rounded shadow-none">
                   <Droppable className="flex h-full flex-1 flex-col px-2" />
-                </Card>
-                <Card className="col-span-3 p-4 shadow-none">
-                  <p className="text-lg font-bold">Edit Attributes:</p>
-
-                  {state.selected === null ? null : <div>{state.selected}</div>}
                 </Card>
               </div>
             </Provider>
