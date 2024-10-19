@@ -5,6 +5,11 @@ import { Card } from "@root/components/ui/card";
 import { cn, render } from "@root/lib/utils";
 import { supabase } from "@root/supabase";
 import { DnDElementType } from "@siddheshtawde/drag-and-drop";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@root/components/ui/resizable";
 
 export default function Page({ params }: { params: { wireframe: string } }) {
   const [data, setData] = React.useState<any>(null);
@@ -47,7 +52,16 @@ export default function Page({ params }: { params: { wireframe: string } }) {
           </div>
         </Card>
         <Card className="col-span-9 flex h-full flex-col gap-2 border-none shadow-none">
-          {render(data.template as never as DnDElementType[], selected, setSelected)}
+          <ResizablePanelGroup direction="horizontal">
+            <ResizablePanel>
+              {render(
+                data.template as never as DnDElementType[],
+                selected,
+                setSelected,
+              )}
+            </ResizablePanel>
+            <ResizableHandle />
+          </ResizablePanelGroup>
         </Card>
       </div>
     </main>
