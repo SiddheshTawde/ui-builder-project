@@ -11,7 +11,7 @@
     "gen:types": "npx supabase gen types typescript --workdir src --project-id ${env:PROJECT_REF} --schema public > src/supabase/supabase.types.ts"
   },
   "dependencies": {
-    "@clerk/nextjs": "^5.2.4",
+    "@clerk/nextjs": "^6.0.2",
     "@heroicons/react": "^2.1.5",
     "@hookform/resolvers": "^3.9.0",
     "@radix-ui/react-alert-dialog": "^1.1.1",

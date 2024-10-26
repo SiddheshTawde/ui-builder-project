@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   description: "Design Interfaces with a Simple Drag-and-Drop Experience",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

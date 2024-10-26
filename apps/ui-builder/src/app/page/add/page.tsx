@@ -1,3 +1,3 @@
-export default function AddNewPage() {
+export default async function AddNewPage() {
   return null;
 }
