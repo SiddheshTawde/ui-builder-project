@@ -1,8 +1,8 @@
 import React from "react";
-import { Draggable, Droppable, Provider, DnDState } from "@siddheshtawde/drag-and-drop/dist";
+import { Draggable, Droppable, Provider, DnDState } from "@siddheshtawde/drag-and-drop";
 import { layout } from "./assets/data";
 
-import "@siddheshtawde/drag-and-drop/dist/index.css";
+import "@siddheshtawde/drag-and-drop/index.css";
 import "./index.css";
 
 const initialState: DnDState = {

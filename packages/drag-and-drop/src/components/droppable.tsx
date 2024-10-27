@@ -52,6 +52,7 @@ export const Droppable = ({ as: AsElement = "div", ...props }: Props) => {
     setHovered("");
 
     if (state.dragging) {
+      console.log({ dragged: state.dragging });
       const target = event.currentTarget.id;
 
       setState({

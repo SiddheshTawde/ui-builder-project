@@ -1,5 +1,5 @@
 {
-  "name": "drag-and-drop",
+  "name": "@repo/drag-and-drop",
   "description": "React.js TypeScript based Drag & Drop library for building React pages.",
   "version": "1.0.4",
   "author": "Siddhesh Tawde",
