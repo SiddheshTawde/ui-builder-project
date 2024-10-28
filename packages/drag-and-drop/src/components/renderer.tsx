@@ -1,7 +1,7 @@
 import React from "react";
 import { DnDElementType } from "../types";
 import { useDnD } from "../context";
-import { cn, removeElementById, updateChildrenById } from "../utils";
+import { cn, DynamicComponentLoader, removeElementById } from "../utils";
 import { Reorder } from "framer-motion";
 import { isEqual } from "lodash";
 import { EdgeDropIndicator } from "./edge-drop-indicator";
@@ -38,6 +38,39 @@ export const Renderer = (props: Props) => {
     const updated = removeElementById(state.elements, props.element.id || "");
     setState({ ...state, elements: updated });
   };
+
+  if (props.element.tag === "element") {
+    return (
+      <Reorder.Item
+        id={props.element.id}
+        value={props.element}
+        onMouseEnter={props.handleMouseEnter}
+        onMouseOver={props.handleMouseOver}
+        onMouseLeave={props.handleMouseLeave}
+        onClick={selectElement}
+        style={props.element.attributes?.style}
+        className={cn(
+          "dnd-relative dnd-rounded dnd-border-2 dnd-border-dashed dnd-border-transparent",
+          { "dnd-px-2": props.element.title !== "Row" },
+          { "dnd-pb-2": props.element.title === "Row" },
+          { "!dnd-border-indigo-500": state.selected === props.element.id },
+          { "dnd-border-transparent/60": props.hovered === props.element.id },
+        )}
+      >
+        {props.hovered !== props.element.id ? null : (
+          <div className="dnd-absolute dnd-right-0 dnd-top-0 dnd-flex dnd-w-full dnd-items-center dnd-justify-end dnd-px-2">
+            <button
+              className="dnd-h-fit dnd-w-fit dnd-text-xs dnd-text-red-500"
+              onClick={handleRemove}
+            >
+              Remove
+            </button>
+          </div>
+        )}
+        <DynamicComponentLoader component={props.element.title} />
+      </Reorder.Item>
+    );
+  }
 
   return (
     <Reorder.Item

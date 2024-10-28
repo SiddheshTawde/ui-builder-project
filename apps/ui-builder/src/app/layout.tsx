@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import "@siddheshtawde/drag-and-drop/index.css";
+import "@repo/ui/dist/index.css";
 import { Toaster } from "@root/components/ui/toaster";
 import Header from "@root/components/core/header.core";
 

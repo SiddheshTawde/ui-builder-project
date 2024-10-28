@@ -1,7 +1,10 @@
+import React, { Suspense } from "react";
 import { remove } from "lodash";
 import { twMerge } from "tailwind-merge";
 import { type ClassValue, clsx } from "clsx";
 import { DnDElementType } from "../types";
+
+import * as UIElements from "@repo/ui/dist";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -114,3 +117,17 @@ export function updateChildrenById(
   // Start the recursive search and update
   return updateChildren(elements);
 }
+
+export const loadComponent = (component: JSX.Element) => {
+  return React.lazy(() => UIElements?.[component as never]);
+};
+
+type LoadComponentProps = {
+  component: string;
+};
+
+export const DynamicComponentLoader = (props: LoadComponentProps) => {
+  const Component = UIElements?.[props.component];
+
+  return <Component />;
+};

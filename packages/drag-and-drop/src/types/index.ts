@@ -3,7 +3,7 @@ import React from "react";
 export type DnDElementType = {
   id?: string;
   title: string;
-  tag: keyof React.ReactHTML;
+  tag: keyof React.ReactHTML | "element";
   attributes: React.HTMLAttributes<keyof React.ReactHTML>;
   children: DnDElementType[];
 };

@@ -13,7 +13,7 @@ import {
   Droppable,
   DnDState,
   DnDElementType,
-} from "@repo/drag-and-drop/src";
+} from "@siddheshtawde/drag-and-drop";
 import { Button } from "@root/components/ui/button";
 import { Card } from "@root/components/ui/card";
 import {
@@ -35,7 +35,6 @@ import {
 } from "@root/components/ui/select";
 import { supabase } from "@root/supabase";
 import { Json, Tables } from "@root/supabase/supabase.types";
-import * as UIComponents from "@repo/ui";
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
 import { savePage } from "@root/services/save-page";
 import { getWireframe } from "@root/services/get-wireframe";
@@ -59,6 +58,7 @@ import {
   DialogTrigger,
 } from "@root/components/ui/dialog";
 import Link from "next/link";
+import { pageElements } from "@root/constants/page.elements";
 
 const formSchema = z.object({
   pagename: z
@@ -210,16 +210,13 @@ export default function AddNewPage() {
                   </FormLabel>
 
                   <ul className="flex flex-col gap-2">
-                    {/* Insert Elements here */}
-                    {Object.keys(UIComponents).map((element, index) => (
+                    {pageElements.map((element, index) => (
                       <Draggable
-                        key={element + "_" + (index + 1)}
-                        dragdata={
-                          UIComponents[element as keyof typeof UIComponents] as unknown as DnDElementType
-                        }
+                        key={element.tag + "_" + (index + 1)}
+                        dragdata={element}
                         className="border bg-white px-2 py-3 font-medium capitalize"
                       >
-                        {element}
+                        {element.title}
                       </Draggable>
                     ))}
                   </ul>
