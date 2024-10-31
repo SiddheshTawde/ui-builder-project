@@ -19,7 +19,7 @@ export const columns: ColumnDef<Tables<"pages">>[] = [
     cell: ({ row }) => {
       return (
         <Button variant="link" asChild>
-          <Link href={"/wireframe/" + row.getValue("name")}>
+          <Link href={"/page/" + row.getValue("name")}>
             {row.getValue("name")}
           </Link>
         </Button>

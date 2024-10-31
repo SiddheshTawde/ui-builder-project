@@ -5,24 +5,17 @@ import { Card } from "@root/components/ui/card";
 import { cn, render } from "@root/lib/utils";
 import { supabase } from "@root/supabase";
 import { DnDElementType } from "@repo/drag-and-drop/src";
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@root/components/ui/resizable";
 
-export default function Page(props: {
-  params: Promise<{ wireframe: string }>;
-}) {
+export default function Page(props: { params: Promise<{ page: string }> }) {
   const params = use(props.params);
   const [data, setData] = React.useState<any>(null);
   const [selected, setSelected] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     supabase
-      .from("wireframes")
+      .from("pages")
       .select("*")
-      .eq("name", params.wireframe)
+      .eq("name", params.page)
       .single()
       .then(({ data, error }) => {
         if (error) {
@@ -31,7 +24,7 @@ export default function Page(props: {
 
         setData(data);
       });
-  }, [params.wireframe]);
+  }, [params.page]);
 
   if (!data) {
     return <div>Loading...</div>;
@@ -54,23 +47,12 @@ export default function Page(props: {
             </div>
           </div>
         </Card>
-        <Card className="col-span-9 h-full border-none shadow-none">
-          <ResizablePanelGroup direction="horizontal">
-            <ResizablePanel
-              className="flex h-full flex-col gap-2 border-b border-l border-t p-2"
-              defaultSize={100}
-              minSize={40}
-            >
-              {render(
-                data.template as never as DnDElementType[],
-                selected,
-                setSelected,
-              )}
-            </ResizablePanel>
-            <ResizableHandle className="mr-2" withHandle />
-
-            <ResizablePanel>{null}</ResizablePanel>
-          </ResizablePanelGroup>
+        <Card className="col-span-9 flex h-full flex-col gap-2 border-none shadow-none">
+          {render(
+            data.template as never as DnDElementType[],
+            selected,
+            setSelected,
+          )}
         </Card>
       </div>
     </main>

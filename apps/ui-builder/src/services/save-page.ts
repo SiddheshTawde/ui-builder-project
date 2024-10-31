@@ -17,6 +17,8 @@ export async function savePage(
     created_by: user.fullName || "",
     updated_by_id: user.id,
     updated_by: user.fullName || "",
+    published: false,
+    publish_notes: "",
   });
 
   if (error) {

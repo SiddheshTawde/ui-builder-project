@@ -151,6 +151,8 @@ export default function AddNewPage() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     toggleSaving(true);
 
+    console.log({ values });
+
     if (user) {
       try {
         await savePage(user, values.pagename, state.elements as never as Json);
@@ -174,7 +176,7 @@ export default function AddNewPage() {
       <main className="container mx-auto h-[calc(100vh-64px)]">
         <Form {...form}>
           <form
-            id="add-wireframe-form"
+            id="add-page-form"
             onSubmit={form.handleSubmit(onSubmit)}
             className="flex h-full w-full flex-col gap-4"
           >
