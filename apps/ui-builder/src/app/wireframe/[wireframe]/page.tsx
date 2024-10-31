@@ -4,7 +4,7 @@ import React, { use } from "react";
 import { Card } from "@root/components/ui/card";
 import { cn, render } from "@root/lib/utils";
 import { supabase } from "@root/supabase";
-import { DnDElementType } from "@siddheshtawde/drag-and-drop";
+import { DnDElementType } from "@repo/drag-and-drop/src";
 import {
   ResizableHandle,
   ResizablePanel,

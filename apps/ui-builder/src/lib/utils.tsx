@@ -1,6 +1,6 @@
 import { twMerge } from "tailwind-merge";
 import { type ClassValue, clsx } from "clsx";
-import { DnDElementType } from "@siddheshtawde/drag-and-drop";
+import { DnDElementType } from "@repo/drag-and-drop/src";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

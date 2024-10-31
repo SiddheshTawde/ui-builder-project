@@ -4,7 +4,7 @@ import { twMerge } from "tailwind-merge";
 import { type ClassValue, clsx } from "clsx";
 import { DnDElementType } from "../types";
 
-import * as UIElements from "@repo/ui/dist";
+import * as UIElements from "@repo/ui/src";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -124,10 +124,12 @@ export const loadComponent = (component: JSX.Element) => {
 
 type LoadComponentProps = {
   component: string;
+  attributes: React.HTMLAttributes<keyof React.ReactHTML>;
 };
 
 export const DynamicComponentLoader = (props: LoadComponentProps) => {
+  // @ts-expect-error - No index signature with a parameter of type 'string' was found on type 'typeof import(...)'.
   const Component = UIElements?.[props.component];
 
-  return <Component />;
+  return <Component {...props.attributes} />;
 };

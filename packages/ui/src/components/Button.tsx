@@ -1,6 +1,6 @@
 import React, { ButtonHTMLAttributes, CSSProperties } from "react";
 import { FiLoader } from "react-icons/fi";
-import { cn } from "../lib/utils.js";
+import { cn } from "../lib/utils";
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "contained" | "outlined" | "link";

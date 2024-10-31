@@ -67,7 +67,10 @@ export const Renderer = (props: Props) => {
             </button>
           </div>
         )}
-        <DynamicComponentLoader component={props.element.title} />
+        <DynamicComponentLoader
+          component={props.element.title}
+          attributes={props.element.attributes}
+        />
       </Reorder.Item>
     );
   }
