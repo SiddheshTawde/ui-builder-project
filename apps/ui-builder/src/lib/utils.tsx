@@ -49,6 +49,7 @@ export function render(
       {nodes.map((node) =>
         node?.tag === "element" ? (
           <DynamicComponentLoader
+            key={node.id}
             component={node.title}
             attributes={node.attributes}
           />
