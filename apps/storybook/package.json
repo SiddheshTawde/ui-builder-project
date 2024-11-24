@@ -3,19 +3,21 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "storybook": "storybook dev -p 8000",
+    "dev": "storybook dev -p 8000",
     "build-storybook": "storybook build",
     "clean": "rm -rf storybook-static && rm -rf node_modules"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.2",
-    "@storybook/addon-essentials": "^8.4.0",
-    "@storybook/addon-interactions": "^8.4.0",
-    "@storybook/addon-onboarding": "^8.4.0",
-    "@storybook/blocks": "^8.4.0",
-    "@storybook/nextjs": "^8.4.0",
-    "@storybook/react": "^8.4.0",
-    "@storybook/test": "^8.4.0",
-    "storybook": "^8.4.0"
+    "@repo/ui": "*",
+    "@storybook/addon-essentials": "8.4.0",
+    "@storybook/addon-interactions": "8.4.0",
+    "@storybook/addon-mdx-gfm": "^8.4.0",
+    "@storybook/addon-onboarding": "8.4.0",
+    "@storybook/blocks": "8.4.0",
+    "@storybook/nextjs": "8.4.0",
+    "@storybook/react": "8.4.0",
+    "@storybook/test": "8.4.0",
+    "storybook": "8.4.0"
   }
 }
