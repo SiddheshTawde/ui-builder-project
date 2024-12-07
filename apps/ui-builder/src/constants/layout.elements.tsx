@@ -1,4 +1,4 @@
-import { DnDElementType } from "@repo/drag-and-drop/src";
+import { DnDElementType } from "@siddheshtawde/drag-and-drop/src";
 
 export const layoutElements: DnDElementType[] = [
   {

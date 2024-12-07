@@ -1,5 +1,5 @@
 {
-  "name": "@repo/drag-and-drop",
+  "name": "@siddheshtawde/drag-and-drop",
   "description": "React.js TypeScript based Drag & Drop library for building React pages.",
   "version": "1.0.6",
   "author": "Siddhesh Tawde",
@@ -25,9 +25,9 @@
     "uuid": "^10.0.0"
   },
   "devDependencies": {
-    "@repo/eslint-config": "*",
-    "@repo/typescript-config": "*",
-    "@repo/ui": "*",
+    "@siddheshtawde/eslint-config": "*",
+    "@siddheshtawde/typescript-config": "*",
+    "@siddheshtawde/ui": "1.0.0",
     "@types/lodash": "^4.17.7",
     "@types/uuid": "^10.0.0",
     "autoprefixer": "^10.4.18",

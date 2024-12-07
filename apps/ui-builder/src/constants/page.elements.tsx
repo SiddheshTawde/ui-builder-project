@@ -1,4 +1,4 @@
-import { DnDElementType } from "@repo/drag-and-drop/src";
+import { DnDElementType } from "@siddheshtawde/drag-and-drop/src";
 
 export const pageElements: DnDElementType[] = [
   {
@@ -9,6 +9,12 @@ export const pageElements: DnDElementType[] = [
   },
   {
     title: "Input",
+    attributes: {},
+    tag: "element",
+    children: [],
+  },
+  {
+    title: "HTMLContent",
     attributes: {},
     tag: "element",
     children: [],

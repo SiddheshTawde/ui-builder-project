@@ -4,7 +4,7 @@ import React, { use } from "react";
 import { Card } from "@root/components/ui/card";
 import { cn, render } from "@root/lib/utils";
 import { supabase } from "@root/supabase";
-import { DnDElementType } from "@repo/drag-and-drop/src";
+import { DnDElementType } from "@siddheshtawde/drag-and-drop/src";
 
 export default function Page(props: { params: Promise<{ page: string }> }) {
   const params = use(props.params);

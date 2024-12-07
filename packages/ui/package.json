@@ -1,6 +1,6 @@
 {
-  "name": "@repo/ui",
-  "version": "0.0.1",
+  "name": "@siddheshtawde/ui",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "main": "./dist/index.cjs",
@@ -23,8 +23,8 @@
     "uuid": "^10.0.0"
   },
   "devDependencies": {
-    "@repo/eslint-config": "*",
-    "@repo/typescript-config": "*",
+    "@siddheshtawde/eslint-config": "*",
+    "@siddheshtawde/typescript-config": "*",
     "@types/react": "^18.2.61",
     "@types/react-dom": "^18.2.19",
     "@types/uuid": "^10.0.0",

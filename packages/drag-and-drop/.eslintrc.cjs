@@ -1,3 +1,3 @@
 module.exports = {
-  extends: ["@repo/eslint-config/react-internal.js"],
+  extends: ["@siddheshtawde/eslint-config/react-internal.js"],
 };
