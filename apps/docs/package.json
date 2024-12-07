@@ -1,24 +1,20 @@
 {
-  "name": "@siddheshtawde/ui-docs",
+  "name": "@siddheshtawde/docs",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "storybook dev -p 8000",
-    "build-storybook": "storybook build",
-    "clean": "rm -rf storybook-static && rm -rf node_modules"
+    "build-storybook": "storybook build"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.2",
-    "@siddheshtawde/ui": "^1.0.0",
     "@storybook/addon-essentials": "^8.4.7",
     "@storybook/addon-interactions": "^8.4.7",
-    "@storybook/addon-mdx-gfm": "^8.4.7",
     "@storybook/addon-onboarding": "^8.4.7",
     "@storybook/blocks": "^8.4.7",
     "@storybook/nextjs": "^8.4.7",
     "@storybook/react": "^8.4.7",
     "@storybook/test": "^8.4.7",
-    "ajv": "^7.2.4",
     "storybook": "^8.4.7"
   }
 }
