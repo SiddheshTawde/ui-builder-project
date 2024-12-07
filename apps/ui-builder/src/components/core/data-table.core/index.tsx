@@ -21,7 +21,7 @@ import {
 import { Input } from "@root/components/ui/input";
 
 import React from "react";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 

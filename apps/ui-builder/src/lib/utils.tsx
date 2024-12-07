@@ -87,3 +87,63 @@ export function render(
     </>
   );
 }
+
+export function findElementById(
+  data: DnDElementType[],
+  id: string,
+): DnDElementType | null {
+  // Iterate through each top-level element in the array
+  for (const element of data) {
+    // Use a helper function to search recursively
+    const result = findElementByIdRecursive(element, id);
+    if (result) {
+      return result;
+    }
+  }
+  // Return null if no match is found
+  return null;
+}
+
+function findElementByIdRecursive(
+  element: DnDElementType,
+  id: string,
+): DnDElementType | null {
+  // Check if the current element matches the id
+  if (element.id === id) {
+    return element;
+  }
+
+  // Search recursively in children
+  for (const child of element.children) {
+    const result = findElementByIdRecursive(child, id);
+    if (result) {
+      return result;
+    }
+  }
+
+  // Return null if no match is found
+  return null;
+}
+
+export function updateElementById(
+  data: DnDElementType[],
+  id: string,
+  updatedValues: Partial<Omit<DnDElementType, "children">>, // Allow updating all fields except children
+): DnDElementType[] {
+  // Helper function to update recursively
+  function updateRecursive(element: DnDElementType): DnDElementType {
+    if (element.id === id) {
+      // Merge the updated values into the current node
+      return { ...element, ...updatedValues };
+    }
+
+    // Recursively update children
+    return {
+      ...element,
+      children: element.children.map(updateRecursive),
+    };
+  }
+
+  // Return updated data with recursive updates
+  return data.map(updateRecursive);
+}

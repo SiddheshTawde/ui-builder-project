@@ -59,6 +59,7 @@ import {
 } from "@root/components/ui/dialog";
 import Link from "next/link";
 import { pageElements } from "@root/constants/page.elements";
+import AttributeEditor from "@root/components/core/attribute-editor.core";
 
 const formSchema = z.object({
   pagename: z
@@ -223,9 +224,13 @@ export default function AddNewPage() {
                     ))}
                   </ul>
                 </Card>
-                <Card className="col-span-10 flex rounded shadow-none">
+                <Card className="col-span-7 flex rounded shadow-none">
                   <Droppable className="flex h-full flex-1 flex-col px-2" />
                 </Card>
+
+                <div className="col-span-3 h-full border">
+                  <AttributeEditor state={state} setState={setState} />
+                </div>
               </div>
             </Provider>
 

@@ -46,7 +46,7 @@ export const columns: ColumnDef<Tables<"wireframes">>[] = [
       return (
         <div className="flex items-center gap-x-4">
           <Button variant="link" asChild>
-            <Link href={"/wireframe/" + row.getValue("name")}>
+            <Link href={"/wireframe/" + row.getValue("name")} className="px-0">
               {row.getValue("name")}
             </Link>
           </Button>
