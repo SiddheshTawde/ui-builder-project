@@ -152,8 +152,6 @@ export default function AddNewPage() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     toggleSaving(true);
 
-    console.log({ values });
-
     if (user) {
       try {
         await savePage(user, values.pagename, state.elements as never as Json);

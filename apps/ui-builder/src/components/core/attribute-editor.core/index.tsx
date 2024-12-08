@@ -87,7 +87,7 @@ const AttributeEditor = ({ state, setState }: AttributeEditorProps) => {
         </p>
       </div>
 
-      {details?.tag !== "input" ? (
+      {details?.title !== "Input" ? (
         <div className="grid w-full items-center gap-1.5">
           <Label htmlFor="edit-element-classnames">HTML Content</Label>
           <MonacoEditor
@@ -98,6 +98,11 @@ const AttributeEditor = ({ state, setState }: AttributeEditorProps) => {
             defaultValue="// some comment"
             value={details?.attributes?.children?.toLocaleString()}
             onChange={(value) => handleOnChange("children", value || "")}
+            onMount={(editor) => {
+              editor.setValue(
+                details?.attributes?.children?.toLocaleString() || "",
+              );
+            }}
           />
         </div>
       ) : null}

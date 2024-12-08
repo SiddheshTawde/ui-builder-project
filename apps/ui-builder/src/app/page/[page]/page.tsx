@@ -1,13 +1,13 @@
 "use client";
 
-import React, { use } from "react";
+import React from "react";
 import { Card } from "@root/components/ui/card";
 import { cn, render } from "@root/lib/utils";
 import { supabase } from "@root/supabase";
 import { DnDElementType } from "@siddheshtawde/drag-and-drop/src";
 
-export default function Page(props: { params: Promise<{ page: string }> }) {
-  const params = use(props.params);
+export default function Page(props: { params: { page: string } }) {
+  const params = props.params;
   const [data, setData] = React.useState<any>(null);
   const [selected, setSelected] = React.useState<string | null>(null);
 

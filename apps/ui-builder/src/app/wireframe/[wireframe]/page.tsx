@@ -1,6 +1,6 @@
 "use client";
 
-import React, { use } from "react";
+import React from "react";
 import { Card } from "@root/components/ui/card";
 import { cn, render } from "@root/lib/utils";
 import { supabase } from "@root/supabase";
@@ -11,10 +11,8 @@ import {
   ResizablePanelGroup,
 } from "@root/components/ui/resizable";
 
-export default function Page(props: {
-  params: Promise<{ wireframe: string }>;
-}) {
-  const params = use(props.params);
+export default function Page(props: { params: { wireframe: string } }) {
+  const params = props.params;
   const [data, setData] = React.useState<any>(null);
   const [selected, setSelected] = React.useState<string | null>(null);
 

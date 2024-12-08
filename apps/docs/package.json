@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "storybook dev -p 8000",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "clean": "rm -rf node_modules"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.2",
