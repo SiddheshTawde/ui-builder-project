@@ -1,4 +1,7 @@
+"use client";
+
 import React from "react";
+import MonacoEditor from "@monaco-editor/react";
 
 import { Input } from "@root/components/ui/input";
 import { Label } from "@root/components/ui/label";
@@ -83,6 +86,21 @@ const AttributeEditor = ({ state, setState }: AttributeEditorProps) => {
           Use comma (",") separated values for multiple classes.
         </p>
       </div>
+
+      {details?.tag !== "input" ? (
+        <div className="grid w-full items-center gap-1.5">
+          <Label htmlFor="edit-element-classnames">HTML Content</Label>
+          <MonacoEditor
+            height="20vh"
+            theme="vs-dark"
+            language="html"
+            defaultLanguage="html"
+            defaultValue="// some comment"
+            value={details?.attributes?.children?.toLocaleString()}
+            onChange={(value) => handleOnChange("children", value || "")}
+          />
+        </div>
+      ) : null}
     </div>
   );
 };

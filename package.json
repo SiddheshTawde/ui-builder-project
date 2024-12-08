@@ -9,18 +9,19 @@
     "type-check": "turbo type-check",
     "changeset": "changeset",
     "version-packages": "changeset version",
+    "upgrade": "npx npm-check-updates -u && npm run clean && npm install",
     "clean": "turbo run clean && rm -rf node_modules && rm -rf .turbo && rm -rf .next",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
-    "prettier": "^3.2.5",
+    "prettier": "^3.4.2",
     "turbo": "^2.3.3",
-    "typescript": "^5.4.5"
+    "typescript": "^5.7.2"
   },
   "engines": {
     "node": ">=18"
   },
-  "packageManager": "npm@10.8.1",
+  "packageManager": "npm@10.9.2",
   "workspaces": [
     "apps/*",
     "packages/*"

@@ -47,6 +47,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     const input_id = uuidv4();
     return (
       <div
+        id={props.id}
         className={cn("ui-group ui-flex ui-w-full ui-flex-col", [
           props.classNames?.container,
         ])}

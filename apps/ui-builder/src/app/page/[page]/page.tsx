@@ -67,8 +67,18 @@ const List = (
   return (
     <div
       key={node.id}
-      onMouseLeave={() => setSelected(null)}
-      onMouseEnter={() => setSelected(node?.id || null)}
+      onMouseEnter={(event) => {
+        event.stopPropagation();
+        setSelected(node?.id || null);
+      }}
+      onMouseOver={(event) => {
+        event.stopPropagation();
+        setSelected(node?.id || null);
+      }}
+      onMouseLeave={(event) => {
+        event.stopPropagation();
+        setSelected(null);
+      }}
     >
       <p
         className={cn("cursor-pointer", {

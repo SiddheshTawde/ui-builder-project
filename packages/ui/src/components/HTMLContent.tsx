@@ -5,6 +5,7 @@ import React from "react";
 export interface HTMLContentProps extends InputHTMLAttributes<HTMLDivElement> {
   styles?: CSSProperties;
   classNames?: string;
+  children: string;
 }
 
 const HTMLContent = React.forwardRef<HTMLDivElement, HTMLContentProps>(
@@ -12,11 +13,10 @@ const HTMLContent = React.forwardRef<HTMLDivElement, HTMLContentProps>(
     return (
       <div
         ref={ref}
-        className={cn("ui-flex ui-w-full ui-flex-col", [props.classNames])}
         style={props.styles}
-      >
-        {children}
-      </div>
+        className={cn("ui-flex ui-w-full ui-flex-col", [props.classNames])}
+        dangerouslySetInnerHTML={{ __html: children }}
+      />
     );
   },
 );
