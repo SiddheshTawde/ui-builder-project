@@ -1,20 +1,11 @@
-import React, { ButtonHTMLAttributes, CSSProperties } from "react";
+import React, { ButtonHTMLAttributes } from "react";
+import PropTypes from "prop-types";
 import { FiLoader } from "react-icons/fi";
 import { cn } from "../lib/utils";
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "contained" | "outlined" | "link";
   loading?: boolean;
-  styles?: {
-    container?: CSSProperties;
-    button?: CSSProperties;
-    loader?: CSSProperties;
-  };
-  classNames?: {
-    container?: string;
-    button?: string;
-    loader?: string;
-  };
 }
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
@@ -27,25 +18,19 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref,
   ) => {
     return (
-      <div
-        className={cn("button-container ui-relative ui-h-fit ui-w-fit", [
-          props.classNames?.container,
-        ])}
-        style={props.styles?.container}
-      >
+      <div className="button-container ui-relative ui-h-fit ui-w-fit">
         <button
           ref={ref}
           {...props}
           disabled={loading || props.disabled}
           className={cn(
             "button-element ui-rounded ui-px-4 ui-py-2 ui-transition-all",
-            [props.classNames?.button],
             {
               "ui-bg-indigo-500 ui-text-indigo-50 disabled:ui-bg-indigo-500/10":
                 variant === "contained",
             },
             {
-              "ui-border ui-border-indigo-500 ui-bg-indigo-50 ui-text-indigo-500 disabled:ui-border-indigo-500/10 disabled:ui-text-primary/10":
+              "disabled:ui-text-primary/10 ui-border ui-border-indigo-500 ui-bg-indigo-50 ui-text-indigo-500 disabled:ui-border-indigo-500/10":
                 variant === "outlined",
             },
             {
@@ -53,23 +38,26 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                 variant === "link",
             },
           )}
-          style={props.styles?.button}
         >
           {children}
         </button>
 
         {loading ? (
-          <FiLoader
-            className={cn(
-              "ui-absolute ui-bottom-0 ui-left-0 ui-right-0 ui-top-0 ui-z-10 ui-m-auto ui-h-5 ui-w-5 ui-animate-spin ui-text-indigo-500",
-              [props.classNames?.loader],
-            )}
-            style={props.styles?.loader}
-          />
+          <FiLoader className="ui-absolute ui-bottom-0 ui-left-0 ui-right-0 ui-top-0 ui-z-10 ui-m-auto ui-h-5 ui-w-5 ui-animate-spin ui-text-indigo-500" />
         ) : null}
       </div>
     );
   },
 );
+
+Button.defaultProps = {
+  variant: "contained",
+  loading: false,
+};
+
+Button.propTypes = {
+  variant: PropTypes.oneOf(["contained", "outlined", "link"]),
+  loading: PropTypes.bool,
+};
 
 export default Button;

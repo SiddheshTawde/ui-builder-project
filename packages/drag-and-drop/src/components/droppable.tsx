@@ -103,15 +103,15 @@ export const Droppable = ({ as: AsElement = "div", ...props }: Props) => {
       onMouseOver={handleMouseOver}
       onMouseLeave={handleMouseLeave}
     >
-      <EdgeDropIndicator
-        index={-1}
-        title="body"
-        target={ROOT_ID}
-        reorder={reorder}
-        handleReorder={handleReorder}
-      />
       {reorder.map((element, index) => (
         <React.Fragment key={element.id}>
+          <EdgeDropIndicator
+            index={-1}
+            title="body"
+            target={ROOT_ID}
+            reorder={reorder}
+            handleReorder={handleReorder}
+          />
           <Renderer
             element={element}
             handleDrop={handleDrop}

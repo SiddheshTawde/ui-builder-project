@@ -5,8 +5,9 @@ import MonacoEditor from "@monaco-editor/react";
 
 import { Input } from "@root/components/ui/input";
 import { Label } from "@root/components/ui/label";
-
 import { findElementById, updateElementById } from "@root/lib/utils";
+
+import * as UIElements from "@siddheshtawde/ui";
 import { DnDElementType, DnDState } from "@siddheshtawde/drag-and-drop/src";
 
 interface AttributeEditorProps {
@@ -54,6 +55,9 @@ const AttributeEditor = ({ state, setState }: AttributeEditorProps) => {
       </div>
     );
   }
+
+  // @ts-expect-error - Element implicitly has an 'any' type because expression of type 'string' can't be used to index
+  console.log(UIElements[details.title || ""]?.propTypes);
 
   return (
     <div className="flex flex-col gap-8 p-4">
